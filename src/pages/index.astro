@@ -1,11 +1,26 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HeroSection from '../components/sections/HeroSection.astro';
+import FeaturesSection from '../components/sections/FeaturesSection.astro';
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+const features = [
+	{ title: 'Tokens first', text: 'Every color, size and spacing value comes from tokens.css.' },
+	{ title: 'Reusable parts', text: 'Small pieces like buttons and cards live in components/ui.' },
+	{ title: 'Mobile-first', text: 'Layouts start on a phone and grow for tablet and desktop.' },
+];
 ---
 
-<Layout>
-	<Welcome />
-</Layout>
+<BaseLayout title="Home" description="Example page built from components">
+	<main>
+		<HeroSection
+			badge="Example"
+			title="The project is ready for layout"
+			text="These blocks are examples. Replace them with screens from Figma."
+			primaryLabel="Get started"
+			primaryHref="#features"
+			secondaryLabel="Learn more"
+			secondaryHref="#features"
+		/>
+		<FeaturesSection id="features" title="How it is built" items={features} />
+	</main>
+</BaseLayout>

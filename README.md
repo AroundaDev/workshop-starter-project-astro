@@ -1,46 +1,68 @@
-# Astro Starter Kit: Basics
+# Workshop Astro Starter
 
+Стартовий проєкт сайту на [Astro](https://astro.build). Екрани верстаються з Figma за допомогою Claude.
+
+## Як запустити
+
+### Один раз: підготовка
+1. Встанови [Node.js](https://nodejs.org) версії 22 або новішої (кнопка LTS на сайті).
+2. Відкрий термінал у папці проєкту і виконай:
+   ```sh
+   npm install
+   ```
+   Ця команда завантажить усе, що потрібно для роботи проєкту.
+
+### Щоразу: запуск
 ```sh
-npm create astro@latest -- --template basics
+npm run dev
+```
+Відкрий у браузері **http://localhost:4321**. Поки сервер працює, сторінка оновлюється сама після кожної зміни у файлах.
+
+Щоб зупинити сервер, натисни `Ctrl + C` у терміналі.
+
+> Можна просто попросити Claude: «запусти проєкт».
+
+## Що де лежить
+
+```
+public/                  файли, які йдуть на сайт як є
+├── favicon.svg          іконка вкладки браузера
+└── fonts/               файли шрифтів
+
+src/
+├── assets/              картинки та іконки з Figma (Astro сам їх стискає)
+├── components/
+│   ├── ui/              дрібні «цеглинки»: кнопка, інпут, картка
+│   └── sections/        великі блоки сторінки: hero, footer тощо
+├── layouts/
+│   └── BaseLayout.astro спільна «рамка» сторінки: заголовок вкладки, стилі
+├── pages/               сторінки сайту: кожен файл — окрема адреса
+│   └── index.astro      головна сторінка (/)
+└── styles/
+    ├── tokens.css       дизайн-токени: кольори, шрифти, відступи, радіуси
+    └── global.css       базові стилі для всього сайту
+
+CLAUDE.md                правила, яких Claude дотримується в цьому проєкті
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+### Як це складається разом
+**Сторінка** (`pages/`) огортається в **layout** (`layouts/`) і складається з **секцій** (`sections/`), а секції збираються з **UI-елементів** (`ui/`). Усі кольори та відступи беруться з **токенів** (`tokens.css`).
 
-## 🚀 Project Structure
+Щоб додати нову сторінку, наприклад `/about`, створи файл `src/pages/about.astro`.
 
-Inside of your Astro project, you'll see the following folders and files:
+## Дизайн-токени
+`src/styles/tokens.css` — це аналог Figma variables у коді. Зараз там тимчасові значення, згодом їх замінимо на змінні з Figma. Якщо змінити колір у цьому файлі, він зміниться на всьому сайті.
 
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src
-│   ├── assets
-│   │   └── astro.svg
-│   ├── components
-│   │   └── Welcome.astro
-│   ├── layouts
-│   │   └── Layout.astro
-│   └── pages
-│       └── index.astro
-└── package.json
-```
+## Як працювати з Claude
+- Дай посилання на фрейм у Figma і скажи, що це (наприклад: «зверстай цю hero-секцію»).
+- Claude створить компонент у потрібній папці і використає токени.
+- Після кожного вдалого кроку Claude запропонує зробити коміт, тобто зберегти точку, до якої завжди можна повернутися.
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+## Корисні команди
 
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+| Команда           | Що робить                                    |
+| :---------------- | :------------------------------------------- |
+| `npm install`     | Встановлює залежності (один раз)             |
+| `npm run dev`     | Запускає сайт локально на `localhost:4321`   |
+| `npm run build`   | Збирає готовий сайт у папку `dist/`          |
+| `npm run preview` | Показує зібраний сайт перед публікацією      |

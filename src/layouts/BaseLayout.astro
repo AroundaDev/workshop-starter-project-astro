@@ -1,0 +1,36 @@
+---
+/*
+ * BaseLayout — спільна «рамка» для всіх сторінок.
+ * Містить <head>, підключає стилі, а вміст сторінки вставляє у <slot />.
+ *
+ * Використання:
+ *   <BaseLayout title="Назва сторінки" description="Опис для пошуковиків">
+ *     ...секції сторінки...
+ *   </BaseLayout>
+ */
+import '../styles/tokens.css';
+import '../styles/global.css';
+
+interface Props {
+	title?: string;
+	description?: string;
+}
+
+const { title = 'Workshop Astro Starter', description = '' } = Astro.props;
+---
+
+<!doctype html>
+<html lang="uk">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>{title}</title>
+		{description && <meta name="description" content={description} />}
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="icon" href="/favicon.ico" />
+		<meta name="generator" content={Astro.generator} />
+	</head>
+	<body>
+		<slot />
+	</body>
+</html>
