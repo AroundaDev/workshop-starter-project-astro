@@ -1,43 +1,43 @@
 @AGENTS.md
 
-# Правила роботи в цьому проєкті
+# Rules for working in this project
 
-Над проєктом працює дизайнер без технічного бекграунду. Він верстає екрани з Figma через Claude.
+This project is run by a designer with no technical background. They build screens from Figma with Claude's help.
 
-## Спілкування
-- Пояснюй кожну дію простими словами, без жаргону. Якщо без терміна не обійтися, коротко поясни, що він означає.
-- Перед великою зміною коротко скажи, що збираєшся зробити і в яких файлах.
-- Після кожного вдалого кроку (секція зверстана, компонент створено, баг виправлено) пропонуй закомітити зміни і пропонуй готовий текст коміту.
-- Коміть і пушь тільки після згоди дизайнера. Якщо зараз гілка `master`, спершу створи нову гілку.
+## Communication
+- Explain every action in plain words, without jargon. If a technical term can't be avoided, briefly explain what it means.
+- Before a big change, briefly say what you are going to do and in which files.
+- After every successful step (a section is built, a component is created, a bug is fixed), suggest committing the changes and offer a ready-made commit message.
+- Commit and push only after the designer agrees. If the current branch is `master`, create a new branch first.
 
-## Верстка з Figma
-- Верстай з Figma тільки через Figma MCP: беремо контекст дизайну, скриншот і змінні з макета, а не здогадуємося.
-- Після верстки порівнюй результат зі скриншотом з Figma.
-- Картинки й іконки з макета зберігай у `src/assets/` і виводь через `<Image />` з `astro:assets`. У `public/` кладемо тільки favicon, шрифти та файли, які не треба обробляти.
+## Building from Figma
+- Build from Figma only through the Figma MCP: take the design context, screenshot and variables from the file instead of guessing.
+- After building, compare the result with the Figma screenshot.
+- Save images and icons from the design in `src/assets/` and render them with `<Image />` from `astro:assets`. Put only the favicon, fonts and files that don't need processing in `public/`.
 
-## Токени (обов'язково)
-- Кольори, шрифти, розміри тексту, відступи й радіуси бери **тільки** з `src/styles/tokens.css` через `var(--...)`.
-- Жодних захардкоджених значень: `#hex`, `rgb()`, `16px` для відступів тощо в компонентах заборонені.
-- Якщо в Figma є значення, якого немає в `tokens.css`, не вигадуй його. Скажи про це дизайнеру і запропонуй додати новий токен у `tokens.css`, назвавши його так само, як змінну у Figma.
-- Коли з'являться Figma variables, заповнюй `tokens.css` через `get_variable_defs`.
+## Tokens (required)
+- Take colors, fonts, text sizes, spacing and radii **only** from `src/styles/tokens.css` via `var(--...)`.
+- No hardcoded values: `#hex`, `rgb()`, `16px` for spacing and the like are not allowed in components.
+- If Figma has a value that isn't in `tokens.css`, don't make one up. Tell the designer and suggest adding a new token to `tokens.css`, named the same as the Figma variable.
+- Once Figma variables exist, fill `tokens.css` using `get_variable_defs`.
 
-## Компоненти і папки
-- Кожен новий елемент роби окремим компонентом `.astro` у правильній папці:
-  - `src/components/ui/`: дрібні елементи, які повторюються (Button, Input, Card, Badge, Icon).
-  - `src/components/sections/`: великі блоки сторінки (HeroSection, FeaturesSection, Footer, Header).
-  - `src/layouts/`: каркаси сторінок (BaseLayout).
-  - `src/pages/`: самі сторінки. Кожен файл тут є окремою адресою сайту.
-- Назви файлів пиши у PascalCase: `Button.astro`, `HeroSection.astro`.
-- Перед створенням нового компонента перевір, чи немає вже схожого в `ui/`. Перевикористовуй і розширюй через props, а не дублюй.
-- Тексти, які змінюються, передавай через props або `<slot />`.
-- Стилі пиши в блоці `<style>` всередині компонента. Вони автоматично діють тільки на цей компонент.
+## Components and folders
+- Make every new element a separate `.astro` component in the right folder:
+  - `src/components/ui/`: small repeated elements (Button, Input, Card, Badge, Icon).
+  - `src/components/sections/`: large page blocks (HeroSection, FeaturesSection, Footer, Header).
+  - `src/layouts/`: page skeletons (BaseLayout).
+  - `src/pages/`: the pages themselves. Each file here is a separate site address.
+- Name files in PascalCase: `Button.astro`, `HeroSection.astro`.
+- Before creating a new component, check whether something similar already exists in `ui/`. Reuse and extend it through props instead of duplicating.
+- Pass text that changes through props or `<slot />`.
+- Write styles in a `<style>` block inside the component. They automatically apply only to that component.
 
-## Адаптив
-- Верстай mobile-first: базові стилі пиши для мобільного, а більші екрани додавай через `@media (min-width: ...)`.
-- Брейкпоінти: 768px (планшет), 1024px (десктоп), 1440px (широкий екран). Вони записані в `tokens.css`.
-- Перевіряй, що на 375px немає горизонтальної прокрутки.
-- Використовуй flex/grid і відносні одиниці. Не задавай фіксовану ширину блокам.
+## Responsive layout
+- Build mobile-first: write the base styles for mobile and add larger screens with `@media (min-width: ...)`.
+- Breakpoints: 768px (tablet), 1024px (desktop), 1440px (wide screen). They are defined in `tokens.css`.
+- Check that there is no horizontal scrolling at 375px.
+- Use flex/grid and relative units. Don't give blocks a fixed width.
 
-## Перевірка
-- Dev-сервер запускай у фоні: `astro dev --background`.
-- Перед комітом перевір, що `npm run build` проходить без помилок.
+## Checks
+- Run the dev server in the background: `astro dev --background`.
+- Before committing, check that `npm run build` finishes without errors.
