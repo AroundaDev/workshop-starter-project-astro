@@ -1,0 +1,64 @@
+---
+/*
+ * Button — a button or a link that looks like a button.
+ *
+ * Usage:
+ *   <Button href="/contact">Get in touch</Button>            → link, filled
+ *   <Button variant="secondary">Learn more</Button>          → button, outlined
+ *
+ * Props:
+ *   variant: "primary" (filled, default) or "secondary" (outlined)
+ *   href:    if set, the button becomes a link to this address
+ *   type:    for a regular button: "button" (default) or "submit"
+ */
+interface Props {
+	variant?: 'primary' | 'secondary';
+	href?: string;
+	type?: 'button' | 'submit';
+}
+
+const { variant = 'primary', href, type = 'button' } = Astro.props;
+const Tag = href ? 'a' : 'button';
+---
+
+<Tag class:list={['button', variant]} href={href} type={href ? undefined : type}>
+	<slot />
+</Tag>
+
+<style>
+	.button {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		gap: var(--space-xs);
+		padding: var(--space-sm) var(--space-lg);
+		border: 1px solid transparent;
+		border-radius: var(--radius-full);
+		font-size: var(--font-size-md);
+		font-weight: var(--font-weight-medium);
+		line-height: var(--line-height-tight);
+		text-align: center;
+		cursor: pointer;
+	}
+
+	.primary {
+		background-color: var(--color-primary);
+		color: var(--color-on-primary);
+	}
+
+	.primary:hover {
+		background-color: var(--color-primary-hover);
+		color: var(--color-on-primary);
+	}
+
+	.secondary {
+		background-color: transparent;
+		border-color: var(--color-border);
+		color: var(--color-text);
+	}
+
+	.secondary:hover {
+		border-color: var(--color-primary);
+		color: var(--color-primary);
+	}
+</style>

@@ -1,0 +1,24 @@
+---
+/*
+ * Badge — a small rounded label (for example "New" or "Beta").
+ *
+ * Usage:
+ *   <Badge>New</Badge>
+ */
+---
+
+<span class="badge"><slot /></span>
+
+<style>
+	.badge {
+		display: inline-flex;
+		align-items: center;
+		padding: var(--space-2xs) var(--space-sm);
+		border-radius: var(--radius-full);
+		background-color: var(--color-surface);
+		color: var(--color-text-muted);
+		font-size: var(--font-size-xs);
+		font-weight: var(--font-weight-medium);
+		line-height: var(--line-height-base);
+	}
+</style>

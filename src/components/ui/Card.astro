@@ -1,0 +1,41 @@
+---
+/*
+ * Card — a block with a title and text.
+ *
+ * Usage:
+ *   <Card title="Fast">Pages load in under a second.</Card>
+ *
+ * Props:
+ *   title: the card heading
+ * The text inside the tag goes into <slot />.
+ */
+interface Props {
+	title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<article class="card">
+	<h3 class="title">{title}</h3>
+	<div class="text"><slot /></div>
+</article>
+
+<style>
+	.card {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-xs);
+		padding: var(--space-lg);
+		border-radius: var(--radius-lg);
+		background-color: var(--color-surface);
+	}
+
+	.title {
+		font-size: var(--font-size-lg);
+	}
+
+	.text {
+		color: var(--color-text-muted);
+	}
+</style>
