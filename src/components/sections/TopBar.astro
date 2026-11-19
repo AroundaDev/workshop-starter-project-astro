@@ -1,0 +1,121 @@
+---
+/*
+ * TopBar — the panel at the top with the page title, notifications and the user menu.
+ * Figma: Top Bar (8124:1155).
+ * Phone: the name and email are hidden, only the avatar stays.
+ *
+ * Usage:
+ *   <TopBar title="Dashboard" userName="Nik Loukas" userEmail="nik@company.com" avatar={avatarImage} />
+ */
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import IconButton from '../ui/IconButton.astro';
+import notificationsIcon from '../../assets/icons/icon-button-notifications.svg';
+import chevronIcon from '../../assets/icons/chevron-down.svg';
+
+interface Props {
+	title: string;
+	userName: string;
+	userEmail: string;
+	avatar: ImageMetadata;
+}
+
+const { title, userName, userEmail, avatar } = Astro.props;
+---
+
+<header class="top-bar">
+	<h1 class="title text-title-page">{title}</h1>
+
+	<div class="actions">
+		<IconButton icon={notificationsIcon} label="Notifications (unread)" />
+
+		<button class="user" type="button" aria-haspopup="menu">
+			<span class="avatar">
+				<Image class="avatar-image" src={avatar} alt="" width={96} densities={[1, 2]} />
+			</span>
+			<span class="user-info">
+				<span class="name text-body-l-regular">{userName}</span>
+				<span class="email text-body-m-regular-tight">{userEmail}</span>
+			</span>
+			<span class="chevron"><Image src={chevronIcon} alt="" /></span>
+		</button>
+	</div>
+</header>
+
+<style>
+	.top-bar {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: var(--space-16);
+		padding: var(--space-8) var(--space-16);
+		border: var(--border-width) solid var(--color-border-topbar);
+		border-radius: var(--radius-16);
+		background-color: var(--color-bg-topbar);
+	}
+
+	.title {
+		color: var(--color-text-title);
+	}
+
+	.actions {
+		display: flex;
+		align-items: center;
+		gap: var(--space-14);
+	}
+
+	.user {
+		display: flex;
+		align-items: center;
+		gap: var(--space-8);
+		padding: var(--space-2);
+		padding-inline-end: var(--space-10);
+		border: var(--border-width) solid var(--color-border-light);
+		border-radius: var(--radius-999);
+		background-color: var(--color-bg-surface);
+		text-align: start;
+	}
+
+	.avatar {
+		display: inline-flex;
+		flex-shrink: 0;
+		inline-size: calc(var(--space-40) + var(--space-8));
+		block-size: calc(var(--space-40) + var(--space-8));
+		overflow: hidden;
+		border: calc(var(--border-width) * 2) solid var(--color-bg-chip-active);
+		border-radius: var(--radius-999);
+		background-color: var(--color-bg-avatar);
+	}
+
+	.avatar-image {
+		inline-size: 100%;
+		block-size: 100%;
+		object-fit: cover;
+	}
+
+	.user-info {
+		display: none;
+		flex-direction: column;
+		gap: var(--space-2);
+		white-space: nowrap;
+	}
+
+	.name {
+		color: var(--color-text-primary);
+	}
+
+	.email {
+		color: var(--color-text-subtle);
+	}
+
+	.chevron {
+		display: inline-flex;
+		padding: var(--space-4);
+	}
+
+	@media (min-width: 768px) {
+		.user-info {
+			display: flex;
+		}
+	}
+</style>
