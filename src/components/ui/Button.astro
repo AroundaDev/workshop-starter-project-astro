@@ -1,28 +1,35 @@
 ---
 /*
  * Button — a button or a link that looks like a button.
+ * Figma: Button/Primary (8133:442).
  *
  * Usage:
- *   <Button href="/contact">Get in touch</Button>            → link, filled
- *   <Button variant="secondary">Learn more</Button>          → button, outlined
+ *   <Button href="/reports" arrow>View all</Button>          → yellow link with an arrow
+ *   <Button variant="secondary">Learn more</Button>          → white button with a border
  *
  * Props:
- *   variant: "primary" (filled, default) or "secondary" (outlined)
+ *   variant: "primary" (yellow, default) or "secondary" (white with a border)
  *   href:    if set, the button becomes a link to this address
  *   type:    for a regular button: "button" (default) or "submit"
+ *   arrow:   show the arrow icon after the text
  */
+import { Image } from 'astro:assets';
+import arrowIcon from '../../assets/icons/arrow-up-right.svg';
+
 interface Props {
 	variant?: 'primary' | 'secondary';
 	href?: string;
 	type?: 'button' | 'submit';
+	arrow?: boolean;
 }
 
-const { variant = 'primary', href, type = 'button' } = Astro.props;
+const { variant = 'primary', href, type = 'button', arrow = false } = Astro.props;
 const Tag = href ? 'a' : 'button';
 ---
 
-<Tag class:list={['button', variant]} href={href} type={href ? undefined : type}>
+<Tag class:list={['button', 'text-body-l-regular', variant]} href={href} type={href ? undefined : type}>
 	<slot />
+	{arrow && <Image class="arrow" src={arrowIcon} alt="" />}
 </Tag>
 
 <style>
@@ -30,35 +37,36 @@ const Tag = href ? 'a' : 'button';
 		display: inline-flex;
 		align-items: center;
 		justify-content: center;
-		gap: var(--space-xs);
-		padding: var(--space-sm) var(--space-lg);
-		border: 1px solid transparent;
-		border-radius: var(--radius-full);
-		font-size: var(--font-size-md);
-		font-weight: var(--font-weight-medium);
-		line-height: var(--line-height-tight);
+		gap: var(--space-8);
+		padding: var(--space-16) var(--space-20);
+		border: var(--border-width) solid transparent;
+		border-radius: var(--radius-999);
+		color: var(--color-text-heading);
 		text-align: center;
+		white-space: nowrap;
 		cursor: pointer;
 	}
 
 	.primary {
-		background-color: var(--color-primary);
-		color: var(--color-on-primary);
+		background-color: var(--color-bg-accent);
+		border-color: var(--color-border-accent);
 	}
 
 	.primary:hover {
-		background-color: var(--color-primary-hover);
-		color: var(--color-on-primary);
+		background-color: var(--color-bg-badge);
 	}
 
 	.secondary {
-		background-color: transparent;
-		border-color: var(--color-border);
-		color: var(--color-text);
+		background-color: var(--color-bg-surface);
+		border-color: var(--color-border-default);
 	}
 
 	.secondary:hover {
-		border-color: var(--color-primary);
-		color: var(--color-primary);
+		border-color: var(--color-border-divider);
+	}
+
+	/* In Figma the arrow is drawn pointing down-left and rotated */
+	.arrow {
+		transform: rotate(180deg);
 	}
 </style>

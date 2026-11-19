@@ -25,17 +25,21 @@ const { title } = Astro.props;
 	.card {
 		display: flex;
 		flex-direction: column;
-		gap: var(--space-xs);
-		padding: var(--space-lg);
-		border-radius: var(--radius-lg);
-		background-color: var(--color-surface);
+		gap: var(--space-8);
+		padding: var(--space-24);
+		border: var(--border-width) solid var(--color-border-card);
+		border-radius: var(--radius-16);
+		background-color: var(--color-bg-subtle);
 	}
 
 	.title {
-		font-size: var(--font-size-lg);
+		color: var(--color-text-strong);
 	}
 
 	.text {
-		color: var(--color-text-muted);
+		color: var(--color-text-secondary);
+		font-size: var(--font-size-14);
+		line-height: var(--line-height-130);
+		letter-spacing: var(--letter-spacing-minus-1);
 	}
 </style>

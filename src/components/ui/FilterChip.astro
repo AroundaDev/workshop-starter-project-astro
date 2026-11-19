@@ -1,0 +1,79 @@
+---
+/*
+ * FilterChip — a report filter tab.
+ * Figma: Filter Chip (8133:418).
+ *
+ * Usage:
+ *   <FilterChip active>All Reports</FilterChip>
+ *   <FilterChip count={31}>Recently Updated</FilterChip>
+ *
+ * Props:
+ *   active: the selected tab
+ *   count:  number in the small yellow circle (optional)
+ */
+import { Image } from 'astro:assets';
+import counterBg from '../../assets/icons/counter-bg.svg';
+
+interface Props {
+	active?: boolean;
+	count?: number;
+}
+
+const { active = false, count } = Astro.props;
+---
+
+<button class:list={['chip', { active, 'has-count': count !== undefined }]} type="button" aria-pressed={active ? 'true' : 'false'}>
+	<span class="text-label-l-medium"><slot /></span>
+	{count !== undefined && (
+		<span class="counter text-caption-xs-regular">
+			<Image class="counter-bg" src={counterBg} alt="" />
+			<span class="counter-value">{count}</span>
+		</span>
+	)}
+</button>
+
+<style>
+	.chip {
+		display: inline-flex;
+		align-items: center;
+		flex-shrink: 0;
+		gap: var(--space-4);
+		padding: var(--space-14) var(--space-16);
+		border: var(--border-width) solid var(--color-border-default);
+		border-radius: var(--radius-999);
+		background-color: var(--color-bg-surface);
+		color: var(--color-text-primary);
+		white-space: nowrap;
+	}
+
+	.chip:hover:not(.active) {
+		border-color: var(--color-border-divider);
+	}
+
+	.has-count {
+		padding-inline-end: var(--space-20);
+	}
+
+	.active {
+		background-color: var(--color-bg-chip-active);
+	}
+
+	.counter {
+		position: relative;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		color: var(--color-text-heading);
+	}
+
+	.counter-bg {
+		position: absolute;
+		inset-block-start: 50%;
+		inset-inline-start: 50%;
+		transform: translate(-50%, -50%);
+	}
+
+	.counter-value {
+		position: relative;
+	}
+</style>
