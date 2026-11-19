@@ -62,12 +62,12 @@ h6 {
 /* ---------- Базові стилі ---------- */
 body {
   min-height: 100vh;
-  font-family: var(--font-family-base);
-  font-size: var(--font-size-md);
+  font-family: var(--font-family-primary);
+  font-size: var(--font-size-16);
   font-weight: var(--font-weight-regular);
-  line-height: var(--line-height-base);
-  color: var(--color-text);
-  background-color: var(--color-bg);
+  line-height: var(--line-height-120);
+  color: var(--color-text-primary);
+  background-color: var(--color-bg-surface);
   -webkit-font-smoothing: antialiased;
 }
 
@@ -77,33 +77,179 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: var(--font-family-heading);
-  font-weight: var(--font-weight-bold);
-  line-height: var(--line-height-tight);
+  font-family: var(--font-family-primary);
+  color: var(--color-text-heading);
 }
 
-h1 { font-size: var(--font-size-2xl); }
-h2 { font-size: var(--font-size-xl); }
-h3 { font-size: var(--font-size-lg); }
+/* Заголовки за замовчуванням виглядають як стилі з Figma */
+h1 {
+  font-size: var(--font-size-32);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-95);
+  letter-spacing: var(--letter-spacing-minus-2);
+}
 
-@media (min-width: 1024px) {
-  h1 { font-size: var(--font-size-3xl); }
-  h2 { font-size: var(--font-size-2xl); }
-  h3 { font-size: var(--font-size-xl); }
+h2 {
+  font-size: var(--font-size-20);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-95);
+  letter-spacing: var(--letter-spacing-minus-2);
+}
+
+h3 {
+  font-size: var(--font-size-16);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-120);
 }
 
 a {
-  color: var(--color-primary);
+  color: inherit;
   text-decoration: none;
 }
 
-a:hover {
-  color: var(--color-primary-hover);
+:focus-visible {
+  outline: var(--border-width) solid var(--color-accent-teal);
+  outline-offset: var(--space-2);
 }
 
-:focus-visible {
-  outline: 2px solid var(--color-primary);
-  outline-offset: 2px;
+/* ---------- Текстові стилі з Figma ----------
+ * Клас = назва стилю у Figma: «Heading/H1» → .text-heading-h1
+ * Приклад: <p class="text-body-m-regular">...</p>
+ */
+.text-heading-h1 {
+  font-family: var(--font-family-primary);
+  font-size: var(--font-size-32);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-95);
+  letter-spacing: var(--letter-spacing-minus-2);
+}
+
+.text-heading-h2 {
+  font-family: var(--font-family-primary);
+  font-size: var(--font-size-20);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-95);
+  letter-spacing: var(--letter-spacing-minus-2);
+}
+
+.text-heading-subtitle {
+  font-family: var(--font-family-primary);
+  font-size: var(--font-size-20);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-120);
+  letter-spacing: var(--letter-spacing-minus-3);
+}
+
+.text-title-page {
+  font-family: var(--font-family-primary);
+  font-size: var(--font-size-18);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-100);
+  letter-spacing: var(--letter-spacing-0);
+}
+
+.text-title-card {
+  font-family: var(--font-family-primary);
+  font-size: var(--font-size-16);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-120);
+  letter-spacing: var(--letter-spacing-0);
+}
+
+.text-body-xl-regular {
+  font-family: var(--font-family-primary);
+  font-size: var(--font-size-17);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-100);
+  letter-spacing: var(--letter-spacing-0);
+}
+
+.text-body-l-regular {
+  font-family: var(--font-family-primary);
+  font-size: var(--font-size-16);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-120);
+  letter-spacing: var(--letter-spacing-0);
+}
+
+.text-label-l-medium {
+  font-family: var(--font-family-primary);
+  font-size: var(--font-size-16);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-22);
+  letter-spacing: var(--letter-spacing-0);
+}
+
+.text-label-l-regular {
+  font-family: var(--font-family-primary);
+  font-size: var(--font-size-16);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-22);
+  letter-spacing: var(--letter-spacing-0);
+}
+
+.text-body-m-regular {
+  font-family: var(--font-family-primary);
+  font-size: var(--font-size-14);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-130);
+  letter-spacing: var(--letter-spacing-minus-1);
+}
+
+.text-body-m-regular-tight {
+  font-family: var(--font-family-primary);
+  font-size: var(--font-size-14);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-120);
+  letter-spacing: var(--letter-spacing-0);
+}
+
+.text-label-s-medium {
+  font-family: var(--font-family-primary);
+  font-size: var(--font-size-12);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-100);
+  letter-spacing: var(--letter-spacing-0);
+}
+
+.text-caption-xs-regular {
+  font-family: var(--font-family-primary);
+  font-size: var(--font-size-10);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-22);
+  letter-spacing: var(--letter-spacing-0);
+}
+
+.text-caption-section-label {
+  font-family: var(--font-family-secondary);
+  font-size: var(--font-size-14);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-100);
+  letter-spacing: var(--letter-spacing-1);
+}
+
+.text-label-m-medium {
+  font-family: var(--font-family-secondary);
+  font-size: var(--font-size-14);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-105);
+  letter-spacing: var(--letter-spacing-0);
+}
+
+.text-caption-badge {
+  font-family: var(--font-family-secondary);
+  font-size: var(--font-size-10);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-100);
+  letter-spacing: var(--letter-spacing-0);
+}
+
+.text-caption-badge-bold {
+  font-family: var(--font-family-secondary);
+  font-size: var(--font-size-10);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-100);
+  letter-spacing: var(--letter-spacing-0);
 }
 
 /* Обгортка, що обмежує ширину контенту і дає бокові відступи */

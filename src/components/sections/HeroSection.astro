@@ -43,32 +43,34 @@ const { badge, title, text, primaryLabel, primaryHref, secondaryLabel, secondary
 
 <style>
 	.hero {
-		padding-block: var(--space-2xl);
+		padding-block: var(--space-32);
 	}
 
 	.inner {
 		display: flex;
 		flex-direction: column;
 		align-items: flex-start;
-		gap: var(--space-md);
+		gap: var(--space-16);
 	}
 
 	.text {
 		max-width: 40ch;
-		font-size: var(--font-size-lg);
-		color: var(--color-text-muted);
+		font-size: var(--font-size-20);
+		line-height: var(--line-height-120);
+		letter-spacing: var(--letter-spacing-minus-3);
+		color: var(--color-text-secondary);
 	}
 
 	.actions {
 		display: flex;
 		flex-wrap: wrap;
-		gap: var(--space-sm);
-		margin-top: var(--space-xs);
+		gap: var(--space-12);
+		margin-top: var(--space-8);
 	}
 
 	@media (min-width: 1024px) {
 		.hero {
-			padding-block: var(--space-3xl);
+			padding-block: var(--space-40);
 		}
 
 		.inner {

@@ -30,35 +30,32 @@ const Tag = href ? 'a' : 'button';
 		display: inline-flex;
 		align-items: center;
 		justify-content: center;
-		gap: var(--space-xs);
-		padding: var(--space-sm) var(--space-lg);
-		border: 1px solid transparent;
-		border-radius: var(--radius-full);
-		font-size: var(--font-size-md);
-		font-weight: var(--font-weight-medium);
-		line-height: var(--line-height-tight);
+		gap: var(--space-8);
+		padding: var(--space-12) var(--space-24);
+		border: var(--border-width) solid transparent;
+		border-radius: var(--radius-999);
+		color: var(--color-text-heading);
+		font-size: var(--font-size-16);
+		font-weight: var(--font-weight-regular);
+		line-height: var(--line-height-120);
 		text-align: center;
 		cursor: pointer;
 	}
 
 	.primary {
-		background-color: var(--color-primary);
-		color: var(--color-on-primary);
+		background-color: var(--color-bg-accent);
 	}
 
 	.primary:hover {
-		background-color: var(--color-primary-hover);
-		color: var(--color-on-primary);
+		background-color: var(--color-bg-badge);
 	}
 
 	.secondary {
-		background-color: transparent;
-		border-color: var(--color-border);
-		color: var(--color-text);
+		background-color: var(--color-bg-surface);
+		border-color: var(--color-border-default);
 	}
 
 	.secondary:hover {
-		border-color: var(--color-primary);
-		color: var(--color-primary);
+		border-color: var(--color-border-divider);
 	}
 </style>
