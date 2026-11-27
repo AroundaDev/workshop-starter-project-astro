@@ -1,0 +1,102 @@
+---
+/*
+ * Тарифи з перемикачем місяць / рік.
+ * УВАГА: річні ціни (−20%) у макеті позначені як тимчасові, їх треба підтвердити в клієнта.
+ */
+import SectionHeading from '../ui/SectionHeading.astro';
+import Tabs from '../ui/Tabs.astro';
+import PlanCard from '../ui/PlanCard.astro';
+import Icon from '../ui/Icon.astro';
+
+const plans = [
+	{ name: 'Solo', monthly: 49, yearly: 39, note: 'For one-person businesses', features: ['1 business number', '300 call minutes', 'Unlimited texts', '1 calendar'] },
+	{ name: 'Team', monthly: 129, yearly: 103, note: 'For teams of 2–10', features: ['3 business numbers', '1,000 call minutes', 'Missed-call follow-ups', 'Per-staff calendars'], featured: true },
+	{ name: 'Practice', monthly: 299, yearly: 239, note: 'For multi-location businesses', features: ['Unlimited numbers', '3,000 call minutes', 'Custom call flows', 'Priority support'] },
+];
+---
+
+<section class="pricing" id="pricing" data-pricing>
+	<div class="container">
+		<div class="pricing__head">
+			<SectionHeading>Simple plans. Start free for 14&nbsp;days.</SectionHeading>
+			<p class="text-lead">No card to start, no contract. Pick a plan when your trial ends, or walk away.</p>
+		</div>
+
+		<div class="pricing__billing">
+			<Tabs label="Billing period" items={[{ label: 'Monthly' }, { label: 'Yearly', badge: '−20%' }]} />
+		</div>
+
+		<div class="pricing__plans">
+			{plans.map((plan) => <PlanCard {...plan} />)}
+		</div>
+
+		<ul class="pricing__notes">
+			<li><Icon name="credit-card" size={20} />No card for the trial</li>
+			<li><Icon name="arrows-clockwise" size={20} />Cancel anytime</li>
+			<li><Icon name="phone" size={20} />Keep your number</li>
+		</ul>
+	</div>
+</section>
+
+<script>
+	const section = document.querySelector<HTMLElement>('[data-pricing]');
+
+	section?.addEventListener('tabchange', (event) => {
+		const yearly = (event as CustomEvent<{ index: number }>).detail.index === 1;
+		section.querySelectorAll<HTMLElement>('[data-price]').forEach((price) => {
+			price.textContent = '$' + (yearly ? price.dataset.yearly : price.dataset.monthly);
+		});
+		section.querySelectorAll('[data-per]').forEach((per) => {
+			per.textContent = yearly ? '/ month, billed yearly' : '/ month';
+		});
+	});
+</script>
+
+<style>
+	.pricing { padding-block-end: var(--space-section); }
+
+	.pricing__head {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr);
+		gap: var(--space-24);
+		align-items: end;
+	}
+
+	.pricing__billing { margin-block-start: var(--space-40); }
+
+	.pricing__plans {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr);
+		gap: var(--tile-gap);
+		margin-block-start: var(--space-24);
+	}
+
+	.pricing__notes {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--space-12) var(--space-32);
+		margin-block-start: var(--space-24);
+		font-size: var(--font-size-14);
+		color: var(--color-text-secondary);
+	}
+
+	.pricing__notes li {
+		display: flex;
+		align-items: center;
+		gap: var(--space-8);
+	}
+
+	@media (min-width: 768px) {
+		.pricing__head {
+			grid-template-columns: repeat(12, minmax(0, 1fr));
+			column-gap: var(--grid-gap);
+		}
+
+		.pricing__head > :global(:first-child) { grid-column: 1 / span 6; }
+		.pricing__head > p { grid-column: 8 / span 5; }
+	}
+
+	@media (min-width: 1024px) {
+		.pricing__plans { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+	}
+</style>

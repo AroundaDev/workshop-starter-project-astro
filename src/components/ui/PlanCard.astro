@@ -1,0 +1,113 @@
+---
+/*
+ * Картка тарифу. featured: виділений план на «квітці».
+ * Річну ціну підставляє скрипт секції з data-yearly.
+ */
+import Card from './Card.astro';
+import Chip from './Chip.astro';
+import Button from './Button.astro';
+import Flower from './Flower.astro';
+import FeatureList from './FeatureList.astro';
+import flower from '../../assets/images/flower.jpg';
+
+interface Props {
+	name: string;
+	monthly: number;
+	yearly: number;
+	note: string;
+	features: string[];
+	featured?: boolean;
+}
+
+const { name, monthly, yearly, note, features, featured = false } = Astro.props;
+---
+
+<Card variant={featured ? 'blush' : 'surface'} flush lift>
+	{featured && <div class="plan__bg"><Flower src={flower} position="30% 72%" /></div>}
+	<div class:list={['plan', { 'plan--featured': featured }]}>
+		<div class="plan__top">
+			<h3>{name}</h3>
+			{featured && <Chip variant="dark" mono>Most popular</Chip>}
+		</div>
+		<div>
+			<p class="plan__price">
+				<b data-price data-monthly={monthly} data-yearly={yearly}>${monthly}</b>
+				<span data-per>/ month</span>
+			</p>
+			<p class="text-small">{note}</p>
+		</div>
+		<FeatureList items={features} check />
+		<div class="plan__action">
+			<Button href="#" variant={featured ? 'primary' : 'outline'} full>Start free trial</Button>
+		</div>
+	</div>
+</Card>
+
+<style>
+	.plan__bg {
+		/* сильніше розмиття, щоб список читався */
+		--blur-flower: var(--blur-glass);
+		position: absolute;
+		inset: 0;
+	}
+
+	/* світла вуаль, щоб текст на «квітці» читався */
+	.plan__bg::after {
+		content: "";
+		position: absolute;
+		inset: 0;
+		background: var(--gradient-plan-veil);
+	}
+
+	.plan {
+		position: relative;
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-24);
+		height: 100%;
+		padding: var(--space-24);
+	}
+
+	.plan--featured {
+		--color-border-default: var(--color-border-strong);
+		--color-text-secondary: var(--color-ink-soft);
+	}
+
+	.plan__top {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: var(--space-12);
+		min-height: var(--size-chip);
+	}
+
+	h3 { font-size: var(--font-size-20); }
+
+	.plan__price {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: baseline;
+		gap: var(--space-8);
+		margin-block-end: var(--space-8);
+	}
+
+	b {
+		font-family: var(--font-family-display);
+		font-size: var(--font-size-price);
+		font-weight: var(--font-weight-light);
+		line-height: var(--line-height-none);
+		letter-spacing: var(--letter-spacing-display);
+		font-variant-numeric: tabular-nums;
+	}
+
+	.plan__price span {
+		font-size: var(--font-size-14);
+		color: var(--color-text-secondary);
+	}
+
+	.plan__action { margin-block-start: auto; }
+
+	@media (min-width: 768px) {
+		.plan { padding: var(--space-32); }
+	}
+</style>

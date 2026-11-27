@@ -36,6 +36,7 @@ import QueueRow from '../components/ui/QueueRow.astro';
 import ReviewCard from '../components/ui/ReviewCard.astro';
 import PhotoCard from '../components/ui/PhotoCard.astro';
 import sara from '../assets/images/review-sara.jpg';
+import PlanCard from '../components/ui/PlanCard.astro';
 import Flower from '../components/ui/Flower.astro';
 import flower from '../assets/images/flower.jpg';
 
@@ -253,6 +254,14 @@ const icons: IconName[] = [
 				<Card flush>
 					<PhotoCard src={sara} alt="Portrait of Dr. Sara Patel" tag="Dental clinic" name="Dr. Sara Patel" role="Owner, Harbor Dental" position="50% 20%" />
 				</Card>
+			</div>
+		</section>
+
+		<section>
+			<p class="text-label">Plan cards: default, featured</p>
+			<div class="cards cards--two">
+				<PlanCard name="Solo" monthly={49} yearly={39} note="For one-person businesses" features={['1 business number', '1 calendar']} />
+				<PlanCard name="Team" monthly={129} yearly={103} note="For teams of 2–10" features={['3 business numbers', 'Per-staff calendars']} featured />
 			</div>
 		</section>
 
