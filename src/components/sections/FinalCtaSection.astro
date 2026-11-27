@@ -1,0 +1,69 @@
+---
+/* Фінальний заклик: скляна панель поверх великої «квітки». */
+import Card from '../ui/Card.astro';
+import Flower from '../ui/Flower.astro';
+import Button from '../ui/Button.astro';
+import flower from '../../assets/images/flower.jpg';
+---
+
+<section class="final">
+	<div class="container">
+		<div class="final__bloom">
+			<Flower src={flower} position="50% 55%" />
+			<div class="final__panel">
+				<Card variant="glass" flush>
+					<div class="final__content">
+						<h2>Let Nora pick up <em class="key">the next</em> call</h2>
+						<p>14 days free. Setup takes 10 minutes, and you can keep your number.</p>
+						<div class="final__action">
+							<Button href="#pricing" arrow>Start free trial</Button>
+						</div>
+					</div>
+				</Card>
+			</div>
+		</div>
+	</div>
+</section>
+
+<style>
+	.final { padding-block-end: var(--space-section); }
+
+	.final__bloom {
+		--blur-flower: var(--blur-flower-strong);
+		position: relative;
+		display: grid;
+		place-items: center;
+		min-height: var(--size-final);
+		padding: var(--space-12);
+		overflow: hidden;
+		border-radius: var(--radius-8);
+	}
+
+	.final__panel {
+		position: relative;
+		z-index: 1;
+		width: min(100%, var(--size-final-panel));
+	}
+
+	.final__content {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: var(--space-24);
+		padding: var(--space-24);
+		text-align: center;
+	}
+
+	p { color: var(--color-ink-soft); }
+
+	.final__action {
+		align-self: stretch;
+		display: grid;
+	}
+
+	@media (min-width: 768px) {
+		.final__bloom { padding: var(--space-24); }
+		.final__content { padding: var(--space-40); }
+		.final__action { align-self: center; }
+	}
+</style>

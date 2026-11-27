@@ -97,6 +97,7 @@
 - **Відгуки** (`sections/ReviewsSection`): три великі картки накладаються при прокрутці, картка позаду зменшується (`--scale-stack-back`) і тьмяніє (`--opacity-stack-shade`); телефон: усе в колонку, з 768px фото 4 колонки + текст 8, або дві цитати 6 + 6.
 - **Тарифи** (`sections/PricingSection`): перемикач `Tabs` segmented, три `PlanCard`; до 1024px один під одним. Річні ціни тимчасові.
 - **FAQ** (`sections/FaqSection`): список `Accordion`, перше питання відкрите; з 1024px заголовок 4 колонки, список 7.
+- **Фінальний заклик** (`sections/FinalCtaSection`): `Flower` із сильним розмиттям (`--blur-flower-strong`), скляна панель по центру; на телефоні кнопка на всю ширину.
 - **Темні вставки:** `Card variant="dark"` або `.is-dark`. Світлий блок усередині темного: `.is-light` (`Card` raised, blush і glass додають його самі).
 - **Hero** (`sections/HeroSection`): плитки в 1 колонку, з 768px сітка 12 колонок, з 1024px два ряди по `--size-tile-row`.
 - **Футер:** темний, з гігантським словом «Nora» (`--font-size-wordmark`).

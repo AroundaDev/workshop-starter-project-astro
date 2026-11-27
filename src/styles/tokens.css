@@ -152,6 +152,8 @@
   --size-icon-20: 20px;
 
   --size-header: 72px;
+  --size-final: 520px;
+  --size-final-panel: 560px;
   --size-photo-card: 240px;
   --size-review: 440px;
   --size-screen-width: 520px;
@@ -201,6 +203,7 @@
   --duration-flow: 32s;
   --duration-marquee: 36s;
   --blur-flower: 6px;
+  --blur-flower-strong: 18px;
 
   /* ---------- Сітка ---------- */
   --container-max-width: 1280px;
