@@ -1,0 +1,46 @@
+---
+/* Питання-відповіді: з 1024px заголовок ліворуч, список праворуч. */
+import SectionHeading from '../ui/SectionHeading.astro';
+import Accordion from '../ui/Accordion.astro';
+import TextLink from '../ui/TextLink.astro';
+
+const questions = [
+	{ q: 'Will callers know they’re talking to AI?', a: 'Nora introduces herself as your business’s assistant. If a caller asks for a person, she transfers the call or takes a message.' },
+	{ q: 'What if Nora can’t answer a question?', a: 'She takes a message and texts you right away.' },
+	{ q: 'Can I keep my current number?', a: 'Yes, via call forwarding.' },
+	{ q: 'Which calendars does Nora work with?', a: 'Google Calendar, Outlook, Square Appointments, Acuity and Vagaro.' },
+	{ q: 'Where is my data stored?', a: 'In US data centers, encrypted. We never use call recordings to train models for other businesses. A HIPAA-ready plan for clinics is coming in Q2 2027.' },
+	{ q: 'Can I cancel anytime?', a: 'Yes. There’s no contract.' },
+];
+---
+
+<section class="faq" id="faq">
+	<div class="container grid-12">
+		<div class="faq__head">
+			<SectionHeading>Questions, answered</SectionHeading>
+			<p class="text-small">Still unsure? <TextLink href="#" variant="inline">Call Nora yourself</TextLink> at (415) 555-0142 and ask her.</p>
+		</div>
+		<div class="faq__list">
+			{questions.map((item, index) => <Accordion question={item.q} open={index === 0}>{item.a}</Accordion>)}
+		</div>
+	</div>
+</section>
+
+<style>
+	.faq { padding-block-end: var(--space-section); }
+
+	.faq__head,
+	.faq__list { grid-column: 1 / -1; }
+
+	.faq__head p { margin-block-start: var(--space-24); }
+	.faq__list { margin-block-start: var(--space-48); }
+
+	@media (min-width: 1024px) {
+		.faq__head { grid-column: 1 / span 4; }
+
+		.faq__list {
+			grid-column: 6 / span 7;
+			margin-block-start: 0;
+		}
+	}
+</style>
