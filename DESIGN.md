@@ -84,6 +84,7 @@
 - **Квітка:** `<Flower>` у блоці з `position: relative`.
 - **Скло:** `Card variant="glass"` або `Chip` поверх фото.
 - **Логотипи** (`sections/LogoStrip`): назви клієнтів текстом, чотири накреслення; телефон: сітка 2 колонки, з 768px рядок, що рухається й зупиняється при наведенні.
+- **Маніфест** (`sections/ManifestoSection`): `.text-manifesto` на 8 колонок і `.text-small` на 3 колонки праворуч; до 1024px один під одним.
 - **Темні вставки:** `Card variant="dark"` або `.is-dark`. Світлий блок усередині темного: `.is-light` (`Card` raised, blush і glass додають його самі).
 - **Hero** (`sections/HeroSection`): плитки в 1 колонку, з 768px сітка 12 колонок, з 1024px два ряди по `--size-tile-row`.
 - **Футер:** темний, з гігантським словом «Nora» (`--font-size-wordmark`).
