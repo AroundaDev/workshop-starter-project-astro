@@ -1,0 +1,93 @@
+---
+/* Шапка: прилипає вгорі, тонка лінія з'являється після прокрутки. */
+import Logo from '../ui/Logo.astro';
+import TextLink from '../ui/TextLink.astro';
+import Button from '../ui/Button.astro';
+import MenuButton from '../ui/MenuButton.astro';
+import MobileMenu from './MobileMenu.astro';
+
+const links = [
+	{ label: 'How it works', href: '#how' },
+	{ label: 'Features', href: '#features' },
+	{ label: 'Pricing', href: '#pricing' },
+	{ label: 'FAQ', href: '#faq' },
+];
+---
+
+<header class="header" data-header>
+	<div class="container header__in">
+		<Logo />
+		<nav class="header__links" aria-label="Main">
+			{links.map((link) => <TextLink href={link.href}>{link.label}</TextLink>)}
+		</nav>
+		<div class="header__right">
+			<span class="header__login"><TextLink href="#">Log in</TextLink></span>
+			<span class="header__cta"><Button href="#pricing" size="sm">Start free trial</Button></span>
+			<span class="header__burger">
+				<MenuButton label="Open menu" data-menu-open aria-expanded="false" aria-controls="mobile-menu" />
+			</span>
+		</div>
+	</div>
+</header>
+
+<MobileMenu links={links} />
+
+<script>
+	const header = document.querySelector('[data-header]');
+	const update = () => header?.classList.toggle('is-scrolled', window.scrollY > 0);
+	window.addEventListener('scroll', update, { passive: true });
+	update();
+</script>
+
+<style>
+	.header {
+		position: sticky;
+		top: 0;
+		z-index: 10;
+		background: var(--color-bg-header);
+		-webkit-backdrop-filter: blur(var(--blur-panel));
+		backdrop-filter: blur(var(--blur-panel));
+		box-shadow: 0 var(--border-width) 0 transparent;
+		transition: box-shadow var(--duration-base) var(--ease-out);
+	}
+
+	.header.is-scrolled { box-shadow: 0 var(--border-width) 0 var(--color-border-default); }
+
+	.header__in {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: var(--space-24);
+		min-height: var(--size-header);
+	}
+
+	.header__links,
+	.header__login,
+	.header__cta { display: none; }
+
+	.header__right {
+		display: flex;
+		align-items: center;
+		gap: var(--space-8);
+	}
+
+	@media (min-width: 480px) {
+		.header__cta { display: block; }
+	}
+
+	@media (min-width: 768px) {
+		.header__login {
+			display: block;
+			padding-inline: var(--space-12);
+		}
+	}
+
+	@media (min-width: 1024px) {
+		.header__links {
+			display: flex;
+			gap: var(--space-32);
+		}
+
+		.header__burger { display: none; }
+	}
+</style>

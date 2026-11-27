@@ -17,6 +17,7 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: var(--size-header);
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
 }

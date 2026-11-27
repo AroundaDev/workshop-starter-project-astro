@@ -69,6 +69,7 @@
   --font-size-h1: clamp(2.5rem, 1.6rem + 3.8vw, 5.5rem);
   --font-size-h2: clamp(1.75rem, 1.35rem + 2.3vw, 3.5rem);
   --font-size-manifesto: clamp(1.5rem, 1.1rem + 2vw, 3rem);
+  --font-size-menu: clamp(2.25rem, 9vw, 3.5rem);
   --font-size-h3: clamp(1.25rem, 1.1rem + 0.5vw, 1.5rem);
   --font-size-lead: clamp(1rem, 0.95rem + 0.3vw, 1.25rem);
   --font-size-metric: 3.5rem;
@@ -141,6 +142,9 @@
   --size-icon-18: 18px;
   --size-icon-20: 20px;
 
+  --size-header: 72px;
+  --size-menu-button: 44px;
+  --size-menu-line: 1.5px;
   --size-switch-width: 36px;
   --size-switch-height: 20px;
   --size-switch-knob: 16px;

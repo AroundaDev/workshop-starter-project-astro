@@ -1,0 +1,47 @@
+---
+/* Кнопка мобільного меню: дві риски, у відкритому стані хрестик. */
+import type { HTMLAttributes } from 'astro/types';
+
+interface Props extends HTMLAttributes<'button'> {
+	label: string;
+	open?: boolean;
+}
+
+const { label, open = false, class: className, ...rest } = Astro.props;
+---
+
+<button type="button" {...rest} class:list={['menu-btn', { 'menu-btn--open': open }, className]} aria-label={label}>
+	<span aria-hidden="true"></span>
+	<span aria-hidden="true"></span>
+</button>
+
+<style>
+	.menu-btn {
+		position: relative;
+		display: grid;
+		place-items: center;
+		flex: none;
+		width: var(--size-menu-button);
+		aspect-ratio: 1;
+		border-radius: 50%;
+		color: var(--color-ink);
+		background: var(--color-white);
+	}
+
+	.menu-btn span {
+		position: absolute;
+		inset-inline: var(--space-12);
+		height: var(--size-menu-line);
+		border-radius: var(--radius-2);
+		background: currentColor;
+		transition: transform var(--duration-base) var(--ease-out);
+	}
+
+	.menu-btn span:first-child { transform: translateY(calc(-1 * var(--space-4))); }
+	.menu-btn span:last-child { transform: translateY(var(--space-4)); }
+	.menu-btn--open span:first-child { transform: rotate(45deg); }
+	.menu-btn--open span:last-child { transform: rotate(-45deg); }
+
+	.menu-btn:active,
+	.menu-btn[data-state="active"] { transform: scale(var(--scale-pressed)); }
+</style>

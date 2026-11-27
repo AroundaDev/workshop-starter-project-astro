@@ -1,0 +1,101 @@
+---
+/* Повноекранне меню для екранів до 1024px. Відкривається кнопкою з data-menu-open. */
+import Logo from '../ui/Logo.astro';
+import MenuButton from '../ui/MenuButton.astro';
+import Button from '../ui/Button.astro';
+import TextLink from '../ui/TextLink.astro';
+
+interface Props {
+	links: { label: string; href: string }[];
+}
+
+const { links } = Astro.props;
+---
+
+<dialog class="menu" id="mobile-menu" aria-label="Menu">
+	<div class="container menu__in">
+		<div class="menu__bar">
+			<Logo />
+			<MenuButton label="Close menu" open data-menu-close />
+		</div>
+		<nav class="menu__links">
+			{links.map((link) => <a href={link.href}>{link.label}</a>)}
+		</nav>
+		<div class="menu__foot">
+			<Button href="#pricing" arrow full>Start free trial</Button>
+			<TextLink href="#">Log in</TextLink>
+		</div>
+	</div>
+</dialog>
+
+<script>
+	const menu = document.querySelector<HTMLDialogElement>('#mobile-menu');
+	const opener = document.querySelector<HTMLButtonElement>('[data-menu-open]');
+
+	if (menu && opener) {
+		opener.addEventListener('click', () => {
+			menu.showModal();
+			opener.setAttribute('aria-expanded', 'true');
+		});
+		menu.addEventListener('close', () => opener.setAttribute('aria-expanded', 'false'));
+		menu.querySelectorAll('a, [data-menu-close]').forEach((element) => element.addEventListener('click', () => menu.close()));
+		// на широкому екрані меню не потрібне
+		window.matchMedia('(min-width: 1024px)').addEventListener('change', (event) => {
+			if (event.matches) menu.close();
+		});
+	}
+</script>
+
+<style>
+	:global(html:has(#mobile-menu[open])) { overflow: hidden; }
+
+	.menu {
+		width: 100%;
+		max-width: 100%;
+		height: 100dvh;
+		max-height: 100dvh;
+		border: 0;
+		overflow-y: auto;
+		color: var(--color-text-primary);
+		background: var(--color-bg-page);
+	}
+
+	.menu__in {
+		display: flex;
+		flex-direction: column;
+		min-height: 100%;
+		padding-block-end: var(--space-40);
+	}
+
+	.menu__bar {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		min-height: var(--size-header);
+	}
+
+	.menu__links {
+		display: flex;
+		flex-direction: column;
+		margin-block: var(--space-48) var(--space-32);
+	}
+
+	.menu__links a {
+		padding-block: var(--space-8);
+		border-bottom: var(--border-width) solid var(--color-border-default);
+		font-family: var(--font-family-display);
+		font-size: var(--font-size-menu);
+		font-weight: var(--font-weight-light);
+		line-height: var(--line-height-heading);
+		letter-spacing: var(--letter-spacing-h2);
+		text-decoration: none;
+	}
+
+	.menu__foot {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: var(--space-16);
+		margin-block-start: auto;
+	}
+</style>

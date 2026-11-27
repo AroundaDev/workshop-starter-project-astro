@@ -1,0 +1,20 @@
+---
+/* Текстовий логотип Nora, веде на головну. */
+interface Props {
+	href?: string;
+}
+
+const { href = '/' } = Astro.props;
+---
+
+<a class="logo" href={href} aria-label="Nora home">Nora</a>
+
+<style>
+	.logo {
+		font-family: var(--font-family-display);
+		font-size: var(--font-size-28);
+		line-height: var(--line-height-none);
+		letter-spacing: var(--letter-spacing-display);
+		text-decoration: none;
+	}
+</style>

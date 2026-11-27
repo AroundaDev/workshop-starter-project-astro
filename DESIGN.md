@@ -66,6 +66,8 @@
 | `PillLabel`, `SectionHeading` | align start, center | статичні |
 | `Avatar` | tone 1–4 | статичний |
 | `LiveDot` | | пульсує |
+| `Logo` | | default, focus |
+| `MenuButton` | open (хрестик) | default, focus, pressed |
 | `Icon` | 11 іконок Phosphor Light; 16, 18, 20 | |
 | `Flower` | position | повільно «дихає» |
 
@@ -80,7 +82,8 @@
 - **Скло:** `Card variant="glass"` або `Chip` поверх фото.
 - **Темні вставки:** `Card variant="dark"` або `.is-dark`.
 - **Футер:** темний, з гігантським словом «Nora» (`--font-size-wordmark`).
-- **Шапка:** прилипає вгорі, фон `--color-bg-header`, тонка лінія після прокрутки.
+- **Шапка** (`sections/Header`): прилипає вгорі, висота `--size-header`, фон `--color-bg-header`, тонка лінія після прокрутки.
+- **Мобільне меню** (`sections/MobileMenu`): до 1024px, на весь екран, пункти шрифтом `--font-size-menu`. До 480px кнопка пробної версії є тільки в меню, до 768px «Log in» теж.
 
 ## 7. Рух
 

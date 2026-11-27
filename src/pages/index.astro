@@ -1,10 +1,16 @@
 ---
 /*
- * Головна сторінка (/). Тут буде лендинг: додаємо секції по черзі.
+ * Головна сторінка (/). Макет: design/nora-landing-motion.html.
+ * Секції додаємо по одній.
  */
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/sections/Header.astro';
 ---
 
-<BaseLayout title="Nora">
-	<main></main>
+<BaseLayout
+	title="Nora — AI receptionist for service businesses"
+	description="Nora answers your business calls and texts 24/7, books appointments into your calendar and follows up with anyone you missed."
+>
+	<Header />
+	<main id="top"></main>
 </BaseLayout>
