@@ -47,11 +47,13 @@
   --color-avatar-2: #ccd1d9;
   --color-avatar-3: #dcd3cd;
   --color-avatar-4: #d6d5cf;
+  --color-avatar-dark: #3a3d46;
 
   /* ---------- Тіні й ефекти ---------- */
   --shadow-button: inset 0 1px 0 rgb(255 255 255 / 0.12), 0 6px 16px rgb(21 23 28 / 0.18);
   --gradient-button: linear-gradient(180deg, var(--color-ink-high) 0%, var(--color-ink) 100%);
   --gradient-photo-shade: linear-gradient(to top, rgb(21 23 28 / 0.28) 0%, rgb(21 23 28 / 0) 50%);
+  --gradient-photo-caption: linear-gradient(to top, rgb(21 23 28 / 0.72) 0%, rgb(21 23 28 / 0) 45%);
   --blur-glass: 12px;
   --blur-panel: 16px;
 
@@ -149,6 +151,8 @@
   --size-icon-20: 20px;
 
   --size-header: 72px;
+  --size-photo-card: 240px;
+  --size-review: 440px;
   --size-screen-width: 520px;
   --size-panel: 400px;
   --size-step-dot: 9px;
@@ -179,6 +183,8 @@
   --opacity-link-hover: 0.6;
   --opacity-button-hover: 0.07;
   --scale-pressed: 0.98;
+  --scale-stack-back: 0.965;
+  --opacity-stack-shade: 0.1;
   --opacity-step-inactive: 0.38;
   --opacity-step-hover: 0.8;
   --opacity-panel-inactive: 0.45;

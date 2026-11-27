@@ -62,6 +62,8 @@
 | `DetailRow`, `Notification` | | статичні |
 | `FeatureList` | з галочками або без | статичний |
 | `Stat`, `QueueRow` | | статичні; у `Stat` пояснення під цифрою, обидва внизу плитки |
+| `ReviewCard` | з цифрою або без | статичний |
+| `PhotoCard` | | статичний |
 | `Wave` | md, lg | активна, тиша |
 | `StatusRow` | glass, dark | статичний |
 | `PersonPill` | tone 1–4 | статичний |
@@ -71,7 +73,7 @@
 | `Chip` | glass, solid, dark; mono | статичний |
 | `Tag` | default, ink; icon | статичний |
 | `PillLabel`, `SectionHeading` | align start, center; з ромбиком або без (у hero без) | статичні |
-| `Avatar` | tone 1–4 | статичний |
+| `Avatar` | tone 1–4, dark | статичний |
 | `LiveDot` | | пульсує |
 | `Logo` | | default, focus |
 | `MenuButton` | open (хрестик) | default, focus, pressed |
@@ -91,6 +93,7 @@
 - **Маніфест** (`sections/ManifestoSection`): `.text-manifesto` на 8 колонок і `.text-small` на 3 колонки праворуч; до 1024px один під одним.
 - **Як це працює** (`sections/HowSection`): фото зі скляною карткою прилипає, поточний крок визначає картку; з 1024px фото зліва, кроки справа, інакше кроки під фото.
 - **Можливості** (`sections/FeaturesSection`, `FeaturePanel`): до 1024px чотири блоки списком; далі заголовок і вертикальні вкладки прилипають ліворуч, непоточні блоки приглушені.
+- **Відгуки** (`sections/ReviewsSection`): три великі картки накладаються при прокрутці, картка позаду зменшується (`--scale-stack-back`) і тьмяніє (`--opacity-stack-shade`); телефон: усе в колонку, з 768px фото 4 колонки + текст 8, або дві цитати 6 + 6.
 - **Темні вставки:** `Card variant="dark"` або `.is-dark`. Світлий блок усередині темного: `.is-light` (`Card` raised, blush і glass додають його самі).
 - **Hero** (`sections/HeroSection`): плитки в 1 колонку, з 768px сітка 12 колонок, з 1024px два ряди по `--size-tile-row`.
 - **Футер:** темний, з гігантським словом «Nora» (`--font-size-wordmark`).

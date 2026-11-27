@@ -1,0 +1,81 @@
+---
+/*
+ * Відгук: цитата й автор, за бажанням велика цифра. Фон дає батьківська картка.
+ */
+import Avatar from './Avatar.astro';
+
+interface Props {
+	quote: string;
+	name: string;
+	role: string;
+	initials: string;
+	tone?: 1 | 2 | 3 | 4 | 'dark';
+	metric?: string;
+	metricNote?: string;
+}
+
+const { quote, name, role, initials, tone, metric, metricNote } = Astro.props;
+---
+
+<figure class="review">
+	{
+		metric && (
+			<div>
+				<div class="text-metric">{metric}</div>
+				<p class="text-small">{metricNote}</p>
+			</div>
+		)
+	}
+	<div class="review__body">
+		<blockquote class="text-quote">“{quote}”</blockquote>
+		<figcaption>
+			<Avatar initials={initials} tone={tone} />
+			<span>{name}<small>{role}</small></span>
+		</figcaption>
+	</div>
+</figure>
+
+<style>
+	.review {
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		gap: var(--space-32);
+		height: 100%;
+		padding: var(--space-24);
+	}
+
+	/* без цифри цитата вгорі, автор унизу */
+	.review__body {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-24);
+	}
+
+	.review__body:only-child {
+		flex: 1;
+		justify-content: space-between;
+	}
+
+	blockquote { max-width: 24ch; }
+
+	figcaption {
+		display: flex;
+		align-items: center;
+		gap: var(--space-12);
+		font-size: var(--font-size-14);
+		font-weight: var(--font-weight-medium);
+		line-height: var(--line-height-heading);
+	}
+
+	small {
+		display: block;
+		font-size: var(--font-size-13);
+		font-weight: var(--font-weight-regular);
+		color: var(--color-text-secondary);
+	}
+
+	@media (min-width: 768px) {
+		.review { padding: var(--space-32); }
+	}
+</style>

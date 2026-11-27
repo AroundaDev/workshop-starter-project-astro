@@ -33,6 +33,9 @@ import Notification from '../components/ui/Notification.astro';
 import FeatureList from '../components/ui/FeatureList.astro';
 import Stat from '../components/ui/Stat.astro';
 import QueueRow from '../components/ui/QueueRow.astro';
+import ReviewCard from '../components/ui/ReviewCard.astro';
+import PhotoCard from '../components/ui/PhotoCard.astro';
+import sara from '../assets/images/review-sara.jpg';
 import Flower from '../components/ui/Flower.astro';
 import flower from '../assets/images/flower.jpg';
 
@@ -242,6 +245,18 @@ const icons: IconName[] = [
 		</section>
 
 		<section>
+			<p class="text-label">Review card and photo card</p>
+			<div class="cards cards--two">
+				<Card flush>
+					<ReviewCard metric="0" metricNote="missed calls in March" quote="Clients text at 11 pm. Nora answers, I sleep." initials="JM" tone={2} name="Jess Moreno" role="Founder, Juniper Spa" />
+				</Card>
+				<Card flush>
+					<PhotoCard src={sara} alt="Portrait of Dr. Sara Patel" tag="Dental clinic" name="Dr. Sara Patel" role="Owner, Harbor Dental" position="50% 20%" />
+				</Card>
+			</div>
+		</section>
+
+		<section>
 			<p class="text-label">Accordion: open, closed, hover, focus</p>
 			<div>
 				<Accordion question="Can I keep my current number?" open>Yes, via call forwarding.</Accordion>
@@ -273,6 +288,7 @@ const icons: IconName[] = [
 				<Avatar initials="TW" tone={2} />
 				<Avatar initials="AG" tone={3} />
 				<Avatar initials="KM" />
+				<Avatar initials="MK" tone="dark" />
 			</div>
 		</section>
 

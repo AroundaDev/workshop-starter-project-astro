@@ -1,0 +1,151 @@
+---
+/*
+ * Відгуки: великі картки, що накладаються одна на одну під час прокрутки.
+ * Картка позаду трохи зменшується й тьмяніє, коли на неї насувається наступна.
+ */
+import SectionHeading from '../ui/SectionHeading.astro';
+import Card from '../ui/Card.astro';
+import ReviewCard from '../ui/ReviewCard.astro';
+import PhotoCard from '../ui/PhotoCard.astro';
+import sara from '../../assets/images/review-sara.jpg';
+import mike from '../../assets/images/review-mike.jpg';
+---
+
+<section class="reviews">
+	<div class="container">
+		<SectionHeading>Owners who stopped missing calls</SectionHeading>
+
+		<ul class="stack" data-stack>
+			<li style="--index: 0">
+				<div class="stack__layer">
+					<Card flush>
+						<div class="pair pair--photo">
+							<PhotoCard src={sara} alt="Portrait of Dr. Sara Patel" tag="Dental clinic" name="Dr. Sara Patel" role="Owner, Harbor Dental" position="50% 20%" />
+							<ReviewCard
+								metric="0"
+								metricNote="missed calls in March"
+								quote="We used to lose Monday mornings to voicemail. Now I open the app and the week is already booked."
+								initials="SP"
+								tone={1}
+								name="Dr. Sara Patel"
+								role="Owner, Harbor Dental · 3 chairs"
+							/>
+						</div>
+					</Card>
+				</div>
+			</li>
+
+			<li style="--index: 1">
+				<div class="stack__layer">
+					<Card variant="dark" flush>
+						<div class="pair pair--photo">
+							<PhotoCard src={mike} alt="Portrait of Mike Kowalski" tag="Plumbing" name="Mike Kowalski" role="Northside Plumbing" position="40% 25%" />
+							<ReviewCard
+								metric="+18"
+								metricNote="jobs a month from missed calls"
+								quote="I’m under a sink half the day. Nora quotes, books and texts the address."
+								initials="MK"
+								tone="dark"
+								name="Mike Kowalski"
+								role="Northside Plumbing"
+							/>
+						</div>
+					</Card>
+				</div>
+			</li>
+
+			<li style="--index: 2">
+				<div class="stack__layer">
+					<Card flush>
+						<div class="pair">
+							<ReviewCard quote="Clients text at 11 pm. Nora answers, I sleep." initials="JM" tone={2} name="Jess Moreno" role="Founder, Juniper Spa" />
+							<ReviewCard quote="Setup took one coffee. The front desk finally gets a lunch break." initials="HC" tone={3} name="Hannah Cole" role="Oakline Vets" />
+						</div>
+					</Card>
+				</div>
+			</li>
+		</ul>
+	</div>
+</section>
+
+<script>
+	const stack = document.querySelector<HTMLElement>('[data-stack]');
+
+	if (stack && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+		const items = [...stack.querySelectorAll<HTMLElement>(':scope > li')];
+		// 0: наступна картка ще за екраном, 1: вона вже лягла зверху
+		const update = () =>
+			items.slice(0, -1).forEach((item, index) => {
+				const next = items[index + 1];
+				const stop = parseFloat(getComputedStyle(next).top);
+				const progress = (window.innerHeight - next.getBoundingClientRect().top) / (window.innerHeight - stop);
+				item.style.setProperty('--progress', String(Math.min(1, Math.max(0, progress))));
+			});
+
+		window.addEventListener('scroll', update, { passive: true });
+		window.addEventListener('resize', update);
+		update();
+	}
+</script>
+
+<style>
+	.reviews { padding-block-end: var(--space-section); }
+
+	.stack {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-24);
+		margin-block-start: var(--space-48);
+	}
+
+	/* кожна наступна картка зупиняється трохи нижче попередньої */
+	li {
+		position: sticky;
+		top: calc(var(--size-header) + var(--index) * var(--space-12));
+	}
+
+	.stack__layer {
+		position: relative;
+		transform: scale(calc(1 - var(--progress, 0) * (1 - var(--scale-stack-back))));
+		transform-origin: 50% 0;
+		transition: transform var(--duration-fast) linear;
+	}
+
+	/* затемнення картки, що лишилася позаду */
+	.stack__layer::after {
+		content: "";
+		position: absolute;
+		inset: 0;
+		z-index: 2;
+		border-radius: var(--radius-8);
+		background: var(--color-dark-bg);
+		opacity: calc(var(--progress, 0) * var(--opacity-stack-shade));
+		pointer-events: none;
+	}
+
+	.pair {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr);
+	}
+
+	.pair > :global(.review + .review) { border-top: var(--border-width) solid var(--color-border-default); }
+
+	@media (min-width: 768px) {
+		.stack { margin-block-start: var(--space-64); }
+		li { top: calc(var(--space-96) + var(--index) * var(--space-16)); }
+
+		.pair {
+			grid-template-columns: repeat(12, minmax(0, 1fr));
+			min-height: var(--size-review);
+		}
+
+		.pair > :global(*) { grid-column: span 6; }
+		.pair--photo > :global(.photo) { grid-column: span 4; }
+		.pair--photo > :global(.review) { grid-column: span 8; }
+
+		.pair > :global(.review + .review) {
+			border-top: 0;
+			border-inline-start: var(--border-width) solid var(--color-border-default);
+		}
+	}
+</style>

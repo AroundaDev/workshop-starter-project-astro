@@ -1,8 +1,8 @@
 ---
-/* Кружечок з ініціалами. tone: один із чотирьох відтінків. */
+/* Кружечок з ініціалами. tone: чотири світлі відтінки або dark для темного фону. */
 interface Props {
 	initials: string;
-	tone?: 1 | 2 | 3 | 4;
+	tone?: 1 | 2 | 3 | 4 | 'dark';
 }
 
 const { initials, tone = 4 } = Astro.props;
@@ -28,4 +28,5 @@ const { initials, tone = 4 } = Astro.props;
 	.avatar--2 { background: var(--color-avatar-2); }
 	.avatar--3 { background: var(--color-avatar-3); }
 	.avatar--4 { background: var(--color-avatar-4); }
+	.avatar--dark { color: var(--color-dark-text); background: var(--color-avatar-dark); }
 </style>
