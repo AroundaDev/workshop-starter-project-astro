@@ -27,6 +27,9 @@ import MenuButton from '../components/ui/MenuButton.astro';
 import StatusRow from '../components/ui/StatusRow.astro';
 import PersonPill from '../components/ui/PersonPill.astro';
 import TranscriptLine from '../components/ui/TranscriptLine.astro';
+import Step from '../components/ui/Step.astro';
+import DetailRow from '../components/ui/DetailRow.astro';
+import Notification from '../components/ui/Notification.astro';
 import Flower from '../components/ui/Flower.astro';
 import flower from '../assets/images/flower.jpg';
 
@@ -208,6 +211,23 @@ const icons: IconName[] = [
 		</section>
 
 		<section>
+			<p class="text-label">Steps: current, default, hover, focus</p>
+			<div class="row-steps">
+				<Step when="Minute 1" title="Current step" active>Text of the step.</Step>
+				<Step when="Minute 3" title="Default step">Text of the step.</Step>
+				<Step when="Minute 5" title="Hover step" state="hover">Text of the step.</Step>
+				<Step when="Minute 8" title="Focus step" state="focus">Text of the step.</Step>
+			</div>
+			<p class="text-label">Detail rows and notifications</p>
+			<Card variant="raised">
+				<DetailRow label="Name">Juniper Spa</DetailRow>
+				<DetailRow label="Hours">Mon–Sat, 9 am–7 pm</DetailRow>
+				<Notification icon="phone" title="First call answered" note="Daniel Osei · 1 min 42 s" />
+				<Notification icon="chat-text" title="Call summary ready" note="Sent to your inbox" />
+			</Card>
+		</section>
+
+		<section>
 			<p class="text-label">Accordion: open, closed, hover, focus</p>
 			<div>
 				<Accordion question="Can I keep my current number?" open>Yes, via call forwarding.</Accordion>
@@ -301,6 +321,8 @@ const icons: IconName[] = [
 		height: var(--space-64);
 		background: var(--color-bg-surface);
 	}
+
+	.row-steps { padding-inline-start: var(--space-32); }
 
 	.stack { display: flex; flex-direction: column; gap: var(--space-8); }
 

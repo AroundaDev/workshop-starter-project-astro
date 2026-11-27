@@ -1,0 +1,24 @@
+---
+/* Рядок «поле: значення» в картці. */
+interface Props {
+	label: string;
+}
+
+const { label } = Astro.props;
+---
+
+<div class="detail">
+	<span class="text-label">{label}</span>
+	<span><slot /></span>
+</div>
+
+<style>
+	.detail {
+		display: grid;
+		grid-template-columns: var(--space-80) minmax(0, 1fr);
+		gap: var(--space-12);
+		align-items: baseline;
+		padding-block: var(--space-6);
+		font-size: var(--font-size-14);
+	}
+</style>

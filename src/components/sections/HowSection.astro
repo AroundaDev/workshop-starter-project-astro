@@ -1,0 +1,278 @@
+---
+/*
+ * Як це працює: фото з карткою прилипає, кроки прокручуються поруч (на телефоні під ним).
+ * Картка відповідає поточному кроку.
+ */
+import { Image } from 'astro:assets';
+import SectionHeading from '../ui/SectionHeading.astro';
+import Card from '../ui/Card.astro';
+import Chip from '../ui/Chip.astro';
+import Step from '../ui/Step.astro';
+import DetailRow from '../ui/DetailRow.astro';
+import Notification from '../ui/Notification.astro';
+import Progress from '../ui/Progress.astro';
+import Switch from '../ui/Switch.astro';
+import Tag from '../ui/Tag.astro';
+import LiveDot from '../ui/LiveDot.astro';
+import photo from '../../assets/images/how-therapist.jpg';
+
+const steps = [
+	{ when: 'Minute 1', title: 'Create your account', text: 'Add your business hours, services and the way you like to greet callers.' },
+	{ when: 'Minute 3', title: 'Import contacts', text: 'Connect Google, Outlook or upload a CSV. Nora greets regulars by name.' },
+	{ when: 'Minute 8', title: 'Register your number', text: 'Keep your current number with call forwarding, or get a new local one.' },
+	{ when: 'Day 1', title: 'Nora takes the first call', text: 'You get a summary of every call and booking. Jump in whenever you want.' },
+];
+---
+
+<section class="how" id="how" data-how>
+	<div class="container grid-12">
+		<div class="how__head">
+			<SectionHeading label="How it works">Live before your coffee <em class="key">gets cold</em></SectionHeading>
+		</div>
+
+		<div class="how__visual">
+			<Image src={photo} alt="Massage therapist with a client while a phone rings on the shelf" widths={[400, 640, 800]} sizes="(min-width: 1024px) 40vw, 100vw" />
+			<span class="how__count"><Chip mono><span data-count>Step 1 of 4</span></Chip></span>
+
+			<div class="how__card is-active" data-card>
+				<Card variant="glass" flush>
+					<div class="how__body">
+						<div class="how__title"><b>Business profile</b><span class="text-label">Saved</span></div>
+						<DetailRow label="Name">Juniper Spa</DetailRow>
+						<DetailRow label="Hours">Mon–Sat, 9 am–7 pm</DetailRow>
+						<DetailRow label="Greeting">“Hi, this is Nora from Juniper Spa. How can I help?”</DetailRow>
+					</div>
+				</Card>
+			</div>
+
+			<div class="how__card" data-card>
+				<Card variant="glass" flush>
+					<div class="how__body">
+						<div class="how__title"><b>Importing contacts</b><span class="text-label">1,284 / 1,284</span></div>
+						<div class="how__progress"><Progress label="Importing contacts" value={100} /></div>
+						<div class="how__tags"><Tag icon="check">Google</Tag><Tag icon="check">Outlook</Tag><Tag>clients.csv</Tag></div>
+					</div>
+				</Card>
+			</div>
+
+			<div class="how__card" data-card>
+				<Card variant="glass" flush>
+					<div class="how__body">
+						<div class="how__title"><b>Business number</b><span class="text-label how__live"><LiveDot />Live</span></div>
+						<p class="how__number">(415) 555-0142</p>
+						<div class="how__row"><span>Forward from my current number</span><Switch label="Forward from my current number" checked /></div>
+					</div>
+				</Card>
+			</div>
+
+			<div class="how__card" data-card>
+				<Card variant="glass" flush>
+					<div class="how__body">
+						<div class="how__title"><b>Today</b><span class="text-label">9:02 am</span></div>
+						<Notification icon="phone" title="First call answered" note="Daniel Osei · 1 min 42 s" />
+						<Notification icon="calendar-check" title="New booking" note="Cleaning · Thu 5:30 pm" />
+						<Notification icon="chat-text" title="Call summary ready" note="Sent to your inbox" />
+					</div>
+				</Card>
+			</div>
+		</div>
+
+		<div class="how__steps" data-steps>
+			<span class="how__rail" aria-hidden="true"><span></span></span>
+			{steps.map((step, index) => (
+				<Step when={step.when} title={step.title} active={index === 0}>{step.text}</Step>
+			))}
+		</div>
+	</div>
+</section>
+
+<script>
+	const section = document.querySelector<HTMLElement>('[data-how]');
+
+	if (section) {
+		const list = section.querySelector<HTMLElement>('[data-steps]')!;
+		const steps = [...section.querySelectorAll<HTMLElement>('[data-step-item]')];
+		const cards = [...section.querySelectorAll<HTMLElement>('[data-card]')];
+		const count = section.querySelector('[data-count]')!;
+		// крок стає поточним, коли його верх піднявся вище цієї частки екрана
+		const line = 0.65;
+
+		const update = () => {
+			const edge = window.innerHeight * line;
+			const current = Math.max(0, steps.findLastIndex((step) => step.getBoundingClientRect().top < edge));
+			steps.forEach((step, index) => {
+				step.classList.toggle('is-active', index === current);
+				step.querySelector('button')?.setAttribute('aria-pressed', String(index === current));
+			});
+			cards.forEach((card, index) => card.classList.toggle('is-active', index === current));
+			count.textContent = `Step ${current + 1} of ${steps.length}`;
+			const box = list.getBoundingClientRect();
+			list.style.setProperty('--progress', String(Math.min(1, Math.max(0, (edge - box.top) / box.height))));
+		};
+
+		steps.forEach((step) =>
+			step.querySelector('button')?.addEventListener('click', () =>
+				window.scrollTo({ top: window.scrollY + step.getBoundingClientRect().top - window.innerHeight * (line - 0.05) }),
+			),
+		);
+		window.addEventListener('scroll', update, { passive: true });
+		window.addEventListener('resize', update);
+		update();
+	}
+</script>
+
+<style>
+	.how__head,
+	.how__visual,
+	.how__steps { grid-column: 1 / -1; }
+
+	.how__head { margin-block-end: var(--space-48); }
+
+	.how__visual {
+		position: sticky;
+		top: var(--size-header);
+		z-index: 2;
+		height: var(--size-how-visual);
+		overflow: hidden;
+		border-radius: var(--radius-8);
+		background: var(--color-bg-surface);
+	}
+
+	.how__visual > img {
+		position: absolute;
+		inset: 0;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		object-position: 40% 50%;
+	}
+
+	.how__visual::after {
+		content: "";
+		position: absolute;
+		inset: 0;
+		background: var(--gradient-photo-shade);
+		pointer-events: none;
+	}
+
+	.how__count {
+		position: absolute;
+		top: var(--space-12);
+		left: var(--space-12);
+		z-index: 1;
+	}
+
+	.how__card {
+		position: absolute;
+		inset: auto var(--space-12) var(--space-12);
+		z-index: 1;
+		visibility: hidden;
+		opacity: 0;
+		transform: translateY(var(--space-8));
+		transition: opacity var(--duration-base) var(--ease-soft), transform var(--duration-base) var(--ease-soft), visibility var(--duration-base);
+	}
+
+	.how__card.is-active {
+		visibility: visible;
+		opacity: 1;
+		transform: none;
+	}
+
+	.how__body { padding: var(--space-16); }
+
+	.how__title {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: var(--space-12);
+		margin-block-end: var(--space-8);
+		padding-block-end: var(--space-8);
+		border-bottom: var(--border-width) solid var(--color-border-default);
+		font-size: var(--font-size-15);
+	}
+
+	b { font-weight: var(--font-weight-medium); }
+
+	.how__progress { margin-block: var(--space-12); }
+
+	/* смужка заповнюється, коли картка стає поточною */
+	.how__card:not(.is-active) .how__progress :global(.progress__bar) { transform: scaleX(0) !important; }
+	.how__progress :global(.progress__bar) { transition-duration: var(--duration-beat); }
+
+	.how__tags {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--space-8);
+	}
+
+	.how__live,
+	.how__row {
+		display: flex;
+		align-items: center;
+		gap: var(--space-6);
+	}
+
+	.how__number {
+		padding-block: var(--space-8);
+		font-family: var(--font-family-display);
+		font-size: var(--font-size-32);
+		font-weight: var(--font-weight-light);
+		line-height: var(--line-height-none);
+		font-variant-numeric: tabular-nums;
+	}
+
+	.how__row {
+		justify-content: space-between;
+		gap: var(--space-12);
+		font-size: var(--font-size-14);
+	}
+
+	.how__steps {
+		position: relative;
+		margin-block-start: var(--space-48);
+		padding-inline-start: var(--space-24);
+	}
+
+	.how__rail {
+		position: absolute;
+		inset: 0 auto 0 0;
+		width: var(--border-width);
+		background: var(--color-border-default);
+	}
+
+	.how__rail span {
+		position: absolute;
+		inset: 0;
+		background: var(--color-text-primary);
+		transform: scaleY(var(--progress, 0));
+		transform-origin: top;
+	}
+
+	@media (min-width: 768px) {
+		.how__body { padding: var(--space-24); }
+		.how__count { top: var(--space-16); left: var(--space-16); }
+		.how__card { inset: auto var(--space-24) var(--space-24); }
+		.how__visual { height: var(--size-how-visual-tablet); }
+	}
+
+	@media (min-width: 1024px) {
+		.how__head {
+			grid-column: 1 / span 6;
+			margin-block-end: var(--space-64);
+		}
+
+		.how__visual {
+			grid-column: 1 / span 5;
+			top: var(--space-96);
+			align-self: start;
+			height: auto;
+			min-height: var(--size-how-visual-tablet);
+			aspect-ratio: 4 / 5;
+		}
+
+		.how__steps {
+			grid-column: 7 / span 6;
+			margin-block-start: 0;
+		}
+	}
+</style>
