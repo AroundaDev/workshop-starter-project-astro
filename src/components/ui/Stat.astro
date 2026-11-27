@@ -1,0 +1,48 @@
+---
+/* Темна плитка: велика цифра й пояснення під нею, притиснуті донизу. */
+import Card from './Card.astro';
+
+interface Props {
+	value: string;
+	unit?: string;
+	note: string;
+}
+
+const { value, unit, note } = Astro.props;
+---
+
+<Card variant="dark" flush>
+	<div class="stat">
+		<div class="stat__value">{value}{unit && <span> {unit}</span>}</div>
+		<p>{note}</p>
+	</div>
+</Card>
+
+<style>
+	.stat {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		justify-content: flex-end;
+		gap: var(--space-12);
+		height: 100%;
+		padding: var(--space-24);
+	}
+
+	.stat__value {
+		font-family: var(--font-family-display);
+		font-size: var(--font-size-stat);
+		font-weight: var(--font-weight-light);
+		line-height: var(--line-height-none);
+		letter-spacing: var(--letter-spacing-display);
+		font-variant-numeric: tabular-nums;
+	}
+
+	.stat__value span,
+	p { color: var(--color-text-secondary); }
+
+	p {
+		max-width: 22ch;
+		font-size: var(--font-size-14);
+	}
+</style>

@@ -30,6 +30,9 @@ import TranscriptLine from '../components/ui/TranscriptLine.astro';
 import Step from '../components/ui/Step.astro';
 import DetailRow from '../components/ui/DetailRow.astro';
 import Notification from '../components/ui/Notification.astro';
+import FeatureList from '../components/ui/FeatureList.astro';
+import Stat from '../components/ui/Stat.astro';
+import QueueRow from '../components/ui/QueueRow.astro';
 import Flower from '../components/ui/Flower.astro';
 import flower from '../assets/images/flower.jpg';
 
@@ -225,6 +228,17 @@ const icons: IconName[] = [
 				<Notification icon="phone" title="First call answered" note="Daniel Osei · 1 min 42 s" />
 				<Notification icon="chat-text" title="Call summary ready" note="Sent to your inbox" />
 			</Card>
+		</section>
+
+		<section>
+			<p class="text-label">Vertical tabs, feature list, stat, queue row</p>
+			<Tabs label="Vertical" items={[{ label: 'Answers calls' }, { label: 'Books appointments' }]} variant="pills" vertical />
+			<FeatureList items={['Greets regulars by name', 'Summary of every call']} />
+			<FeatureList items={['1 business number', 'Unlimited texts']} check />
+			<Stat value="1" unit="min" note="from a missed call to a text back" />
+			<ul>
+				<QueueRow initials="LB" tone={1} name="Laura Bennett" note="Missed call 12:04"><Tag variant="ink">Booked</Tag></QueueRow>
+			</ul>
 		</section>
 
 		<section>

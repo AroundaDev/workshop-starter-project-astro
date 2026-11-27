@@ -1,0 +1,206 @@
+---
+/*
+ * Що робить Nora. До 1024px чотири блоки списком.
+ * З 1024px заголовок і вкладки прилипають ліворуч, блоки прокручуються праворуч.
+ */
+import SectionHeading from '../ui/SectionHeading.astro';
+import Tabs from '../ui/Tabs.astro';
+import TranscriptLine from '../ui/TranscriptLine.astro';
+import Tag from '../ui/Tag.astro';
+import Wave from '../ui/Wave.astro';
+import CalendarSlot from '../ui/CalendarSlot.astro';
+import Bubble from '../ui/Bubble.astro';
+import QueueRow from '../ui/QueueRow.astro';
+import FeaturePanel from './FeaturePanel.astro';
+
+const tabs = ['Answers calls', 'Books appointments', 'Replies to texts', 'Follows up'].map((label) => ({ label }));
+---
+
+<section class="features" id="features" data-features>
+	<div class="container grid-12">
+		<div class="features__head">
+			<SectionHeading>One assistant, four jobs off your desk</SectionHeading>
+			<div class="features__tabs"><Tabs label="What Nora does" items={tabs} variant="pills" vertical /></div>
+		</div>
+
+		<div class="features__panels">
+			<FeaturePanel
+				corner="Live call"
+				live
+				title="Picks up on the first ring, day or night"
+				text="24/7, in your business’s name. Nora knows your services and prices, and transfers to you when a caller asks for a person."
+				items={['Greets regulars by name', 'Transfers to you on request', 'Summary of every call']}
+				stat={{ value: '24/7', note: 'on the first ring, nights and weekends included' }}
+			>
+				<div class="screen__head"><b>Incoming · Daniel Osei</b><span class="screen__meta"><Wave /><span class="text-label">01:42</span></span></div>
+				<TranscriptLine who="Caller">Hi, do you have anything for a cleaning this week? Ideally after work.</TranscriptLine>
+				<TranscriptLine who="Nora" nora>Hi Daniel! I have Thursday at 5:30 or Friday at 6:00. Which works better?</TranscriptLine>
+				<TranscriptLine who="Caller">Thursday, please.</TranscriptLine>
+				<TranscriptLine who="Nora" nora>Done. You’ll get a text confirmation in a minute.</TranscriptLine>
+				<div class="screen__foot"><Tag variant="ink" icon="calendar-check">Booked Thu 5:30</Tag><Tag>Returning patient</Tag></div>
+			</FeaturePanel>
+
+			<FeaturePanel
+				corner="Calendar"
+				title="Books straight into your calendar"
+				text="Nora checks real availability and books into the calendar you already use, then sends a text confirmation."
+				items={['Google Calendar and Outlook', 'Square Appointments, Acuity, Vagaro', 'Text confirmation for every booking']}
+				stat={{ value: '5', note: 'calendars Nora books into' }}
+			>
+				<div class="screen__head"><b>Thursday, Mar 18</b><span class="text-label">Front desk</span></div>
+				<CalendarSlot time="3:30" title="Emma Liu · Check-up" meta="45 min" />
+				<CalendarSlot time="4:30" variant="empty" />
+				<CalendarSlot time="5:30" title="Daniel Osei · Cleaning" meta="New · by Nora" variant="new" />
+				<CalendarSlot time="6:30" title="Ravi Shah · Whitening" meta="60 min" />
+			</FeaturePanel>
+
+			<FeaturePanel
+				corner="Text thread"
+				title="Replies to texts in seconds"
+				text="Nora answers SMS questions about hours, prices and availability, and handles reschedules in the same thread."
+				items={['Hours, prices and availability', 'Reschedules: “Reply C to change”', 'Same number for calls and texts']}
+				stat={{ value: '∞', note: 'texts included on every plan' }}
+			>
+				<div class="screen__head"><b>Priya N.</b><span class="text-label">SMS</span></div>
+				<div class="screen__sms">
+					<span class="text-label screen__time">Sun 9:14 pm</span>
+					<Bubble>Hi! Are you open on Monday? My dog needs her shots.</Bubble>
+					<Bubble from="nora">Hi Priya, yes, we open at 8. Dr. Kim can see Luna at 10:15 or 2:40. Want one of those?</Bubble>
+					<Bubble>10:15 please</Bubble>
+					<Bubble from="nora">You’re booked for Mon 10:15. Bring her vaccination card if you have it.</Bubble>
+				</div>
+			</FeaturePanel>
+
+			<FeaturePanel
+				corner="Follow-ups"
+				plan="Team & Practice"
+				title="Follows up so no one slips away"
+				text="Missed a call? Nora texts anyone you missed within 1 minute and offers a slot."
+				items={['Text-back for every missed call', 'Offers the next free slot', 'Books when the client replies']}
+				stat={{ value: '1', unit: 'min', note: 'from a missed call to a text back' }}
+			>
+				<div class="screen__head"><b>Missed while you were busy</b><span class="text-label">Today</span></div>
+				<ul>
+					<QueueRow initials="LB" tone={1} name="Laura Bennett" note="Missed call 12:04 · texted 12:05"><Tag variant="ink">Booked</Tag></QueueRow>
+					<QueueRow initials="TW" tone={2} name="Tom Walsh" note="Missed call 1:47 · texted 1:48"><Tag>Replied</Tag></QueueRow>
+					<QueueRow initials="AG" tone={3} name="Ana García" note="Missed call 3:20 · texted 3:21"><Tag variant="ink">Booked</Tag></QueueRow>
+					<QueueRow initials="KM" tone={4} name="Kevin Moore" note="Missed call 5:58 · texted 5:59"><Tag>Waiting</Tag></QueueRow>
+				</ul>
+			</FeaturePanel>
+		</div>
+	</div>
+</section>
+
+<script>
+	const section = document.querySelector<HTMLElement>('[data-features]');
+
+	if (section) {
+		const panels = [...section.querySelectorAll<HTMLElement>('[data-panel]')];
+		const tabs = [...section.querySelectorAll<HTMLButtonElement>('.tab')];
+		const line = 0.5;
+
+		// поточний той блок, що перетнув середину екрана
+		const update = () => {
+			const current = Math.max(0, panels.findLastIndex((panel) => panel.getBoundingClientRect().top < window.innerHeight * line));
+			panels.forEach((panel, index) => panel.classList.toggle('is-active', index === current));
+			tabs.forEach((tab, index) => tab.setAttribute('aria-pressed', String(index === current)));
+		};
+
+		section.addEventListener('tabchange', (event) => {
+			const { index } = (event as CustomEvent<{ index: number }>).detail;
+			panels[index].scrollIntoView({ block: 'start' });
+		});
+		section.classList.add('is-ready');
+		window.addEventListener('scroll', update, { passive: true });
+		window.addEventListener('resize', update);
+		update();
+	}
+</script>
+
+<style>
+	.features { padding-block-end: var(--space-section); }
+
+	.features__head,
+	.features__panels { grid-column: 1 / -1; }
+
+	.features__tabs { display: none; }
+
+	.features__panels {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-32);
+		margin-block-start: var(--space-48);
+	}
+
+	.features__panels :global([data-panel]) { scroll-margin-top: var(--space-120); }
+
+	.screen__head {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: space-between;
+		gap: var(--space-12);
+		margin-block-end: var(--space-8);
+		padding-block-end: var(--space-12);
+		border-bottom: var(--border-width) solid var(--color-border-default);
+		font-size: var(--font-size-15);
+	}
+
+	b { font-weight: var(--font-weight-medium); }
+
+	.screen__meta {
+		display: inline-flex;
+		align-items: center;
+		gap: var(--space-12);
+	}
+
+	.screen__head ~ :global(.line) { padding-block: var(--space-8); }
+
+	.screen__head + :global(.row) { border-top: 0; }
+
+	.screen__foot {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--space-8);
+		margin-block-start: var(--space-8);
+		padding-block-start: var(--space-16);
+		border-top: var(--border-width) solid var(--color-border-default);
+	}
+
+	.screen__sms {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-8);
+	}
+
+	.screen__time { align-self: center; }
+
+	@media (min-width: 1024px) {
+		.features__head {
+			grid-column: 1 / span 4;
+			position: sticky;
+			top: var(--space-120);
+			align-self: start;
+		}
+
+		.features__tabs {
+			display: block;
+			margin-block-start: var(--space-32);
+		}
+
+		.features__panels {
+			grid-column: 6 / span 7;
+			gap: var(--space-96);
+			margin-block-start: 0;
+		}
+
+		/* приглушуємо лише коли працює скрипт */
+		.features.is-ready :global([data-panel]) {
+			opacity: var(--opacity-panel-inactive);
+			transition: opacity var(--duration-base) var(--ease-soft);
+		}
+
+		.features.is-ready :global([data-panel].is-active),
+		.features.is-ready :global([data-panel]:focus-within) { opacity: 1; }
+	}
+</style>

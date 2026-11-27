@@ -1,0 +1,38 @@
+---
+/* Рядок черги: аватар, людина, статус праворуч (у слоті). */
+import Avatar from './Avatar.astro';
+
+interface Props {
+	initials: string;
+	tone?: 1 | 2 | 3 | 4;
+	name: string;
+	note: string;
+}
+
+const { initials, tone, name, note } = Astro.props;
+---
+
+<li class="queue">
+	<Avatar initials={initials} tone={tone} />
+	<span class="queue__text">{name}<small>{note}</small></span>
+	<slot />
+</li>
+
+<style>
+	.queue {
+		display: grid;
+		grid-template-columns: auto minmax(0, 1fr) auto;
+		align-items: center;
+		gap: var(--space-12);
+		padding-block: var(--space-12);
+		border-bottom: var(--border-width) solid var(--color-border-default);
+		font-size: var(--font-size-14);
+		line-height: var(--line-height-heading);
+	}
+
+	small {
+		display: block;
+		font-size: var(--font-size-12);
+		color: var(--color-text-secondary);
+	}
+</style>

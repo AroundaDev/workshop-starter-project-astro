@@ -1,0 +1,28 @@
+---
+/* Список переваг із лініями між пунктами. check: із галочками. */
+import Icon from './Icon.astro';
+
+interface Props {
+	items: string[];
+	check?: boolean;
+}
+
+const { items, check = false } = Astro.props;
+---
+
+<ul class="features">
+	{items.map((item) => <li>{check && <Icon name="check" size={20} />}{item}</li>)}
+</ul>
+
+<style>
+	.features { border-top: var(--border-width) solid var(--color-border-default); }
+
+	li {
+		display: flex;
+		align-items: center;
+		gap: var(--space-12);
+		padding-block: var(--space-12);
+		border-bottom: var(--border-width) solid var(--color-border-default);
+		font-size: var(--font-size-15);
+	}
+</style>

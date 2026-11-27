@@ -1,0 +1,96 @@
+---
+/*
+ * Один блок можливості: макет інтерфейсу (slot), опис і велика цифра.
+ */
+import Card from '../ui/Card.astro';
+import Chip from '../ui/Chip.astro';
+import LiveDot from '../ui/LiveDot.astro';
+import FeatureList from '../ui/FeatureList.astro';
+import Stat from '../ui/Stat.astro';
+
+interface Props {
+	corner: string;
+	live?: boolean;
+	plan?: string;
+	title: string;
+	text: string;
+	items: string[];
+	stat: { value: string; unit?: string; note: string };
+}
+
+const { corner, live = false, plan, title, text, items, stat } = Astro.props;
+---
+
+<div class="panel" data-panel>
+	<Card flush>
+		<div class="panel__ui">
+			<span class="panel__corner"><Chip variant="solid" mono>{live && <LiveDot />}{corner}</Chip></span>
+			<div class="panel__screen">
+				<Card variant="raised" flush><div class="panel__screen-in"><slot /></div></Card>
+			</div>
+		</div>
+	</Card>
+
+	<div class="panel__side">
+		<Card flush>
+			<div class="panel__text">
+				{plan && <Chip variant="solid" mono>{plan}</Chip>}
+				<h3>{title}</h3>
+				<p class="text-small">{text}</p>
+				<div class="panel__list"><FeatureList items={items} /></div>
+			</div>
+		</Card>
+		<Stat {...stat} />
+	</div>
+</div>
+
+<style>
+	.panel,
+	.panel__side {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr);
+		gap: var(--tile-gap);
+	}
+
+	.panel__ui {
+		position: relative;
+		display: grid;
+		align-content: center;
+		justify-items: center;
+		height: 100%;
+		padding: var(--space-64) var(--space-16) var(--space-24);
+	}
+
+	.panel__corner {
+		position: absolute;
+		top: var(--space-16);
+		right: var(--space-16);
+	}
+
+	.panel__screen { width: min(100%, var(--size-screen-width)); }
+	.panel__screen-in { padding: var(--space-16); }
+
+	.panel__text {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: var(--space-16);
+		height: 100%;
+		padding: var(--space-24);
+	}
+
+	.panel__list {
+		align-self: stretch;
+		margin-block-start: auto;
+	}
+
+	@media (min-width: 768px) {
+		.panel__ui { padding: var(--space-64) var(--space-32) var(--space-32); }
+		.panel__screen-in { padding: var(--space-24); }
+		.panel__side { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+	}
+
+	@media (min-width: 1024px) {
+		.panel__ui { min-height: var(--size-panel); }
+	}
+</style>
