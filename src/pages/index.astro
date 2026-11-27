@@ -1,106 +1,15 @@
 ---
-/*
- * Dashboard — the main page.
- * Figma: Dashboard — Light (8124:1075).
- */
 import BaseLayout from '../layouts/BaseLayout.astro';
-import Sidebar from '../components/sections/Sidebar.astro';
-import TopBar from '../components/sections/TopBar.astro';
-import PageHeader from '../components/sections/PageHeader.astro';
-import ReportsSection from '../components/sections/ReportsSection.astro';
-
-import avatar from '../assets/images/avatar.png';
-import coverSingaporeCabin from '../assets/images/cover-singapore-cabin.png';
-import coverQantasDining from '../assets/images/cover-qantas-dining.png';
-import coverBritishMeal from '../assets/images/cover-british-meal.png';
-import coverSingaporeDessert from '../assets/images/cover-singapore-dessert.png';
-import logoSingapore from '../assets/logos/singapore-airlines.png';
-import logoQantas from '../assets/logos/qantas.png';
-import logoBritish from '../assets/logos/british-airways.png';
-
-const airlines = {
-	singapore: { airline: 'Singapore Airlines', logo: logoSingapore, logoWidth: 20, logoHeight: 25 },
-	qantas: { airline: 'Qantas Airways', logo: logoQantas, logoWidth: 24, logoHeight: 26 },
-	british: { airline: 'British Airways', logo: logoBritish, logoWidth: 32, logoHeight: 20 },
-};
-
-const shared = {
-	reportType: 'Airline Benchmark Report',
-	nps: '8.4 / 10',
-	updated: 'Updated Sep 24, 2026',
-	cabins: 'Short / Medium / Long haul',
-	keyAreas: ['Service Flow', 'Culinary', 'Partnerships'],
-};
-
-const reports = [
-	{ ...shared, ...airlines.singapore, cover: coverSingaporeCabin, coverAlt: 'Flight attendant serving a meal in a business class seat' },
-	{ ...shared, ...airlines.qantas, cover: coverQantasDining, coverAlt: 'Passengers having a meal on board' },
-	{ ...shared, ...airlines.british, cover: coverBritishMeal, coverAlt: 'Roast dinner with salad served on board' },
-	{ ...shared, ...airlines.qantas, cover: coverQantasDining, coverAlt: 'Passengers having a meal on board' },
-	{ ...shared, ...airlines.singapore, cover: coverSingaporeDessert, coverAlt: 'Dessert, tea and sparkling wine on a tray table' },
-	{ ...shared, ...airlines.singapore, cover: coverSingaporeCabin, coverAlt: 'Flight attendant serving a meal in a business class seat' },
-];
-
-const tabs = [
-	{ label: 'All Reports', active: true },
-	{ label: 'Recently Updated', count: 31 },
-	{ label: 'My Airlines', count: 1 },
-	{ label: 'Trends & History' },
-];
 ---
 
-<BaseLayout title="Dashboard — Inflightfeed" description="Airline benchmark reports dashboard">
-	<div class="dashboard">
-		<Sidebar active="dashboard" />
-
-		<div class="main">
-			<TopBar title="Dashboard" userName="Nik Loukas" userEmail="nik@company.com" avatar={avatar} />
-
-			<main class="content">
-				<PageHeader welcome="Welcome back, Nik">
-					5 new airlines <em>reports</em> available
-				</PageHeader>
-				<ReportsSection title="Reports" tabs={tabs} reports={reports} />
-			</main>
-		</div>
-	</div>
+<BaseLayout title="Головна" description="Головна сторінка">
+	<main class="container">
+		<h1>Проєкт готовий до верстки</h1>
+	</main>
 </BaseLayout>
 
 <style>
-	.dashboard {
-		display: flex;
-		min-block-size: 100vh;
-	}
-
-	/* Phone: side gutters and room at the bottom for the menu bar */
-	.main {
-		display: flex;
-		flex-direction: column;
-		flex: 1;
-		min-inline-size: 0;
-		padding: var(--space-16);
-		padding-block-end: calc(var(--size-icon-button) + var(--space-40));
-	}
-
-	.content {
-		display: flex;
-		flex-direction: column;
-		gap: var(--space-32);
-		padding-block-start: var(--space-32);
-	}
-
-	/* Tablet and larger: as in Figma — 20px from the sidebar, 16px on the right */
-	@media (min-width: 768px) {
-		.dashboard {
-			gap: var(--space-20);
-		}
-
-		.main {
-			padding: var(--space-24) var(--space-16) var(--space-20) 0;
-		}
-
-		.content {
-			padding-block-start: var(--space-40);
-		}
+	main {
+		padding-block: var(--space-2xl);
 	}
 </style>
