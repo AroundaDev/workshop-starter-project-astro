@@ -1,0 +1,30 @@
+---
+/* Коралова крапка, що пульсує: «зараз відбувається». */
+---
+
+<span class="live" aria-hidden="true"></span>
+
+<style>
+	.live {
+		position: relative;
+		flex: none;
+		width: var(--size-dot);
+		height: var(--size-dot);
+		border-radius: 50%;
+		background: var(--color-coral);
+	}
+
+	.live::after {
+		content: "";
+		position: absolute;
+		inset: 0;
+		border-radius: 50%;
+		background: var(--color-coral);
+		animation: pulse var(--duration-pulse) var(--ease-soft) infinite;
+	}
+
+	@keyframes pulse {
+		0% { transform: scale(1); opacity: 0.7; }
+		70%, 100% { transform: scale(3); opacity: 0; }
+	}
+</style>

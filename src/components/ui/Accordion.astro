@@ -1,0 +1,69 @@
+---
+/* Питання-відповідь (FAQ). Плюс стає мінусом. Кілька поспіль утворюють список. */
+interface Props {
+	question: string;
+	open?: boolean;
+	state?: 'hover' | 'focus';
+}
+
+const { question, open = false, state } = Astro.props;
+---
+
+<details class="item" open={open}>
+	<summary data-state={state}>
+		{question}
+		<span class="item__mark" aria-hidden="true"></span>
+	</summary>
+	<p><slot /></p>
+</details>
+
+<style>
+	.item { border-top: var(--border-width) solid var(--color-border-default); }
+	.item:last-of-type { border-bottom: var(--border-width) solid var(--color-border-default); }
+
+	summary {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: var(--space-24);
+		padding-block: var(--space-24);
+		list-style: none;
+		font-size: var(--font-size-18);
+		font-weight: var(--font-weight-medium);
+		letter-spacing: var(--letter-spacing-tight);
+		cursor: pointer;
+	}
+
+	summary::-webkit-details-marker { display: none; }
+
+	summary:hover,
+	summary[data-state="hover"] { color: var(--color-text-secondary); }
+
+	.item__mark {
+		position: relative;
+		flex: none;
+		width: var(--size-icon-20);
+		height: var(--size-icon-20);
+	}
+
+	.item__mark::before,
+	.item__mark::after {
+		content: "";
+		position: absolute;
+		inset-inline: var(--focus-offset);
+		top: calc(50% - var(--border-width));
+		height: var(--focus-width);
+		border-radius: var(--radius-2);
+		background: currentColor;
+		transition: transform var(--duration-base) var(--ease-out);
+	}
+
+	.item__mark::after { transform: rotate(90deg); }
+	.item[open] .item__mark::after { transform: rotate(90deg) scaleX(0); }
+
+	p {
+		max-width: 56ch;
+		padding-block-end: var(--space-24);
+		color: var(--color-text-secondary);
+	}
+</style>

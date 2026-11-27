@@ -1,0 +1,30 @@
+---
+/* Тег усередині картки: статус або ознака. */
+import Icon, { type IconName } from './Icon.astro';
+
+interface Props {
+	variant?: 'default' | 'ink';
+	icon?: IconName;
+}
+
+const { variant = 'default', icon } = Astro.props;
+---
+
+<span class:list={['tag', `tag--${variant}`]}>{icon && <Icon name={icon} size={16} />}<slot /></span>
+
+<style>
+	.tag {
+		display: inline-flex;
+		align-items: center;
+		gap: var(--space-6);
+		height: var(--size-chip);
+		padding-inline: var(--space-12);
+		border-radius: var(--radius-999);
+		font-size: var(--font-size-12);
+		line-height: var(--line-height-none);
+		white-space: nowrap;
+	}
+
+	.tag--default { color: var(--color-text-primary); background: var(--color-bg-surface); }
+	.tag--ink { color: var(--color-text-on-ink); background: var(--color-ink); }
+</style>

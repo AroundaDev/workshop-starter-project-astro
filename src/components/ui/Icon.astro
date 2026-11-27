@@ -1,0 +1,41 @@
+---
+/* Іконка Phosphor Light. Декоративна: підпис дає сусідній текст або aria-label кнопки. */
+const glyphs = {
+	'arrow-left': '',
+	'arrow-right': '',
+	'arrow-up-right': '',
+	'arrows-clockwise': '',
+	'calendar-check': '',
+	'chat-text': '',
+	check: '',
+	'credit-card': '',
+	phone: '',
+	'play-circle': '',
+	plus: '',
+};
+
+export type IconName = keyof typeof glyphs;
+
+interface Props {
+	name: IconName;
+	size?: 16 | 18 | 20;
+	class?: string;
+}
+
+const { name, size = 18, class: className } = Astro.props;
+---
+
+<span class:list={['icon', `icon--${size}`, className]} aria-hidden="true">{glyphs[name]}</span>
+
+<style>
+	.icon {
+		display: inline-block;
+		flex: none;
+		font-family: var(--font-family-icon);
+		line-height: var(--line-height-none);
+	}
+
+	.icon--16 { font-size: var(--size-icon-16); }
+	.icon--18 { font-size: var(--size-icon-18); }
+	.icon--20 { font-size: var(--size-icon-20); }
+</style>

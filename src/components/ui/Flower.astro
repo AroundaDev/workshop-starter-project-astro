@@ -1,0 +1,57 @@
+---
+/*
+ * «Квітка»: розмите фото з зерном, повільно «дихає». Кораловий акцент стилю.
+ * Заповнює батьківський блок, тому батько має бути position: relative.
+ */
+import type { ImageMetadata } from 'astro';
+import { Image } from 'astro:assets';
+
+interface Props {
+	src: ImageMetadata;
+	position?: string;
+}
+
+const { src, position = '50% 50%' } = Astro.props;
+---
+
+<div class="flower" aria-hidden="true">
+	<Image src={src} alt="" style={`object-position: ${position}`} />
+</div>
+
+<style>
+	.flower {
+		position: absolute;
+		inset: 0;
+		overflow: hidden;
+		isolation: isolate;
+		background: var(--color-blush);
+	}
+
+	.flower img {
+		position: absolute;
+		inset: -6%;
+		width: 112%;
+		height: 112%;
+		max-width: none;
+		object-fit: cover;
+		filter: blur(var(--blur-flower)) saturate(1.05);
+		animation: breathe var(--duration-breathe) ease-in-out infinite alternate;
+	}
+
+	/* зерно */
+	.flower::after {
+		content: "";
+		position: absolute;
+		inset: 0;
+		opacity: 0.34;
+		mix-blend-mode: soft-light;
+		pointer-events: none;
+		background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .9 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+	}
+
+	@keyframes breathe {
+		0% { transform: scale(1) translate(0, 0); }
+		50% { transform: scale(1.06) translate(-1.5%, 1%); }
+		100% { transform: scale(1.03) translate(1.5%, -1%); }
+	}
+</style>

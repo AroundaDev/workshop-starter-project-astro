@@ -1,0 +1,31 @@
+---
+/* Кружечок з ініціалами. tone: один із чотирьох відтінків. */
+interface Props {
+	initials: string;
+	tone?: 1 | 2 | 3 | 4;
+}
+
+const { initials, tone = 4 } = Astro.props;
+---
+
+<span class:list={['avatar', `avatar--${tone}`]}>{initials}</span>
+
+<style>
+	.avatar {
+		display: grid;
+		place-items: center;
+		flex: none;
+		width: var(--size-avatar);
+		height: var(--size-avatar);
+		border-radius: 50%;
+		font-size: var(--font-size-11);
+		font-weight: var(--font-weight-medium);
+		line-height: var(--line-height-none);
+		color: var(--color-ink);
+	}
+
+	.avatar--1 { background: var(--color-avatar-1); }
+	.avatar--2 { background: var(--color-avatar-2); }
+	.avatar--3 { background: var(--color-avatar-3); }
+	.avatar--4 { background: var(--color-avatar-4); }
+</style>

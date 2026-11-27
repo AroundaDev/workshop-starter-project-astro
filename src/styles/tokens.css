@@ -1,137 +1,192 @@
 /*
- * ДИЗАЙН-ТОКЕНИ
+ * ДИЗАЙН-ТОКЕНИ: Nora, «Ink & Coral v2»
  * Єдине джерело кольорів, шрифтів, відступів і радіусів проєкту.
- * Значення взяті з Figma: «Inflightfeed — Design Rules» (колекції Colors і Typography).
- * Назва токена = назва змінної у Figma, тільки «/» замінено на «-»:
- *   color/bg/surface  →  --color-bg-surface
+ * Джерело значень: design/nora-landing-motion.html.
  * У компонентах використовуємо ТІЛЬКИ ці змінні: var(--color-text-primary) тощо.
  */
 
 :root {
-  /* ---------- Кольори: фони ---------- */
-  --color-bg-surface: #ffffff;              /* фон карток, кнопок, полів */
-  --color-bg-subtle: #f1f7f7;               /* фон сайдбару, карток звітів */
-  --color-bg-topbar: #f1f7f7eb;             /* фон верхньої панелі (92%) */
-  --color-bg-chip-active: #c9e5e8;          /* активний таб */
-  --color-bg-accent: #e8ff40;               /* основна кнопка */
-  --color-bg-accent-soft: #e3fa5a66;        /* бейдж NPS (40%) */
-  --color-bg-badge: #e3fa5a;                /* лічильник у табі */
-  --color-bg-success-soft: #b8ef4d1a;       /* бейдж «Updated» (10%) */
-  --color-bg-image-placeholder: #00000066;  /* підкладка під фото (40%) */
-  --color-bg-avatar: #edf3f21a;             /* фон аватара (10%) */
-  --color-bg-tag: #c5f3e217;                /* тег у сайдбарі (9%) */
-  --color-bg-inverse: #000000;              /* індикатор непрочитаних */
+  /* ---------- Базова палітра (не змінюється в темних блоках) ---------- */
+  --color-ink: #15171c;
+  --color-ink-high: #2a2c33;  /* верх градієнта кнопки */
+  --color-ink-soft: #2e3038;
+  --color-white: #ffffff;
+  --color-coral: #ff6a55;
+  --color-peach: #ffa07a;
+  --color-blush: #ffd9c7;
+  --color-marker: rgb(255 106 85 / 0.3);
 
-  /* ---------- Кольори: текст ---------- */
-  --color-text-primary: #182131;    /* основний текст */
-  --color-text-heading: #242f3a;    /* заголовки, кнопки */
-  --color-text-strong: #192e30;     /* назви авіакомпаній, NPS */
-  --color-text-title: #332f2f;      /* назва сторінки */
-  --color-text-secondary: #6b7b96;  /* плейсхолдери, вторинний текст */
-  --color-text-muted: #a7b2c6;      /* привітання, акцент у заголовку */
-  --color-text-tertiary: #7c8c8c;   /* тип звіту */
-  --color-text-subtle: #71827c;     /* email користувача */
-  --color-text-label: #676d78;      /* підписи рядків картки */
-  --color-text-caption: #323232a6;  /* підписи розділів сайдбару (65%) */
-  --color-text-success: #38500a;    /* текст бейджа «Updated» */
+  /* ---------- Фони ---------- */
+  --color-bg-page: #f4f4f1;
+  --color-bg-surface: #e9e9e5;       /* плитки */
+  --color-bg-raised: #fbfbf9;        /* картки інтерфейсу */
+  --color-bg-header: rgb(244 244 241 / 0.88);
+  --color-bg-glass: rgb(255 255 255 / 0.78);        /* чип на фото */
+  --color-bg-glass-soft: rgb(255 255 255 / 0.66);   /* рядок статусу */
+  --color-bg-glass-panel: rgb(251 251 249 / 0.72);  /* велика скляна панель */
 
-  /* ---------- Кольори: обводки ---------- */
-  --color-border-default: #e5e5e5;     /* поля, таби, дропдаун */
-  --color-border-light: #ededed;       /* меню користувача */
-  --color-border-card: #b0b5b333;      /* картки, фото (20%) */
-  --color-border-topbar: #b0b5b32b;    /* верхня панель (17%) */
-  --color-border-subtle: #b0b5b31a;    /* блок деталей у картці (10%) */
-  --color-border-success: #6d9b1433;   /* 20% */
-  --color-border-accent: #66898433;    /* 20% */
-  --color-border-divider: #b1b0b0;     /* роздільник у картці */
-  --color-border-badge-ring: #f8f8f8;
-  --color-border-glass: #ffffff1f;     /* кнопка згортання (12%) */
+  /* ---------- Текст ---------- */
+  --color-text-primary: #15171c;
+  --color-text-secondary: #5f616a;
+  --color-text-on-ink: #ffffff;
+  --color-text-on-ink-muted: #c9cbd1;
 
-  /* ---------- Кольори: іконки й статуси ---------- */
-  --color-icon-dark: #052815;       /* темні іконки */
-  --color-icon-muted: #909090;      /* другорядні іконки */
-  --color-icon-primary: #28303f;    /* іконка згортання сайдбару */
-  --color-status-online: #28e35c;   /* статус «онлайн» */
+  /* ---------- Лінії ---------- */
+  --color-border-default: #dadad4;
+  --color-border-strong: rgb(21 23 28 / 0.16);
 
-  /* ---------- Кольори: акценти ---------- */
-  --color-accent-teal: #568c92;        /* індикатор «Cabins» */
-  --color-accent-teal-light: #80b3b9;  /* крапки-розділювачі тегів */
-  --color-accent-yellow: #ffd960;      /* індикатор «Key Areas» */
-  --color-accent-olive: #465008;       /* крапка в бейджі NPS */
+  /* ---------- Темна тема ---------- */
+  --color-dark-bg: #15171c;
+  --color-dark-surface: #1f2128;
+  --color-dark-border: #2e3038;
+  --color-dark-text: #f4f4f1;
+  --color-dark-text-secondary: #9a9ca3;
+
+  /* ---------- Аватари ---------- */
+  --color-avatar-1: #d9d4cc;
+  --color-avatar-2: #ccd1d9;
+  --color-avatar-3: #dcd3cd;
+  --color-avatar-4: #d6d5cf;
+
+  /* ---------- Тіні й ефекти ---------- */
+  --shadow-button: inset 0 1px 0 rgb(255 255 255 / 0.12), 0 6px 16px rgb(21 23 28 / 0.18);
+  --gradient-button: linear-gradient(180deg, var(--color-ink-high) 0%, var(--color-ink) 100%);
+  --blur-glass: 12px;
+  --blur-panel: 16px;
 
   /* ---------- Шрифти ---------- */
-  /* Після назви з Figma стоять запасні шрифти: вони спрацюють, поки файлів шрифту немає в public/fonts/ */
-  --font-family-primary: "Helvetica Now Display", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  --font-family-secondary: "Manrope", system-ui, sans-serif;
+  --font-family-display: "Newsreader", Georgia, serif;
+  --font-family-text: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-family-mono: "Geist Mono", ui-monospace, "SFMono-Regular", monospace;
+  --font-family-icon: "Phosphor Light";
 
+  --font-weight-light: 300;
   --font-weight-regular: 400;
   --font-weight-medium: 500;
-  --font-weight-semibold: 600;
 
-  --font-size-10: 0.625rem;  /* 10px */
-  --font-size-12: 0.75rem;   /* 12px */
-  --font-size-14: 0.875rem;  /* 14px */
-  --font-size-16: 1rem;      /* 16px */
-  --font-size-17: 1.0625rem; /* 17px */
-  --font-size-18: 1.125rem;  /* 18px */
-  --font-size-20: 1.25rem;   /* 20px */
-  --font-size-32: 2rem;      /* 32px */
+  /* Гнучкі розміри: ростуть разом із шириною екрана */
+  --font-size-wordmark: clamp(4rem, 18vw, 20rem);
+  --font-size-h1: clamp(2.5rem, 1.6rem + 3.8vw, 5.5rem);
+  --font-size-h2: clamp(1.75rem, 1.35rem + 2.3vw, 3.5rem);
+  --font-size-manifesto: clamp(1.5rem, 1.1rem + 2vw, 3rem);
+  --font-size-h3: clamp(1.25rem, 1.1rem + 0.5vw, 1.5rem);
+  --font-size-lead: clamp(1rem, 0.95rem + 0.3vw, 1.25rem);
+  --font-size-metric: 3.5rem;
+  --font-size-price: 4rem;
+  --font-size-quote: clamp(1.375rem, 1.1rem + 0.8vw, 1.75rem);
 
-  /* Висота рядка (з текстових стилів Figma) */
-  --line-height-95: 0.95;
-  --line-height-100: 1;
-  --line-height-105: 1.05;
-  --line-height-120: 1.2;
-  --line-height-130: 1.3;
-  --line-height-22: 1.375rem; /* 22px */
+  /* Фіксовані розміри */
+  --font-size-11: 0.6875rem;
+  --font-size-12: 0.75rem;
+  --font-size-13: 0.8125rem;
+  --font-size-14: 0.875rem;
+  --font-size-15: 0.9375rem;
+  --font-size-16: 1rem;
+  --font-size-18: 1.125rem;
+  --font-size-20: 1.25rem;
+  --font-size-24: 1.5rem;
+  --font-size-28: 1.75rem;
 
-  /* Міжлітерний інтервал (у Figma задано у %) */
-  --letter-spacing-minus-3: -0.03em;
-  --letter-spacing-minus-2: -0.02em;
-  --letter-spacing-minus-1: -0.01em;
-  --letter-spacing-0: 0;
-  --letter-spacing-1: 0.01em;
+  --line-height-none: 1;
+  --line-height-h1: 1.04;
+  --line-height-h2: 1.08;
+  --line-height-heading: 1.25;
+  --line-height-lead: 1.5;
+  --line-height-body: 1.55;
 
-  /* ---------- Відступи (шкала з Figma) ---------- */
-  --space-2: 0.125rem;  /* 2px */
-  --space-4: 0.25rem;   /* 4px */
-  --space-6: 0.375rem;  /* 6px */
-  --space-8: 0.5rem;    /* 8px */
-  --space-10: 0.625rem; /* 10px */
-  --space-12: 0.75rem;  /* 12px */
-  --space-14: 0.875rem; /* 14px */
-  --space-16: 1rem;     /* 16px */
-  --space-20: 1.25rem;  /* 20px */
-  --space-24: 1.5rem;   /* 24px */
-  --space-32: 2rem;     /* 32px */
-  --space-40: 2.5rem;   /* 40px */
+  --letter-spacing-wordmark: -0.045em;
+  --letter-spacing-display: -0.03em;
+  --letter-spacing-h1: -0.025em;
+  --letter-spacing-h2: -0.02em;
+  --letter-spacing-tight: -0.01em;
+  --letter-spacing-caps: 0.06em;
 
-  /* ---------- Радіуси ---------- */
-  --radius-4: 4px;     /* дрібні елементи */
-  --radius-5: 5px;     /* дрібні елементи */
-  --radius-10: 10px;   /* фото, блоки всередині картки */
-  --radius-12: 12px;   /* фото, блоки всередині картки */
-  --radius-16: 16px;   /* картки й панелі */
-  --radius-20: 20px;   /* картки й панелі */
-  --radius-999: 999px; /* пігулки й круглі кнопки */
+  /* ---------- Відступи ---------- */
+  --space-2: 0.125rem;
+  --space-4: 0.25rem;
+  --space-6: 0.375rem;
+  --space-8: 0.5rem;
+  --space-12: 0.75rem;
+  --space-16: 1rem;
+  --space-24: 1.5rem;
+  --space-32: 2rem;
+  --space-40: 2.5rem;
+  --space-48: 3rem;
+  --space-64: 4rem;
+  --space-80: 5rem;
+  --space-96: 6rem;
+  --space-120: 7.5rem;
+  --space-160: 10rem;
+  --space-section: clamp(6.5rem, 5rem + 7vw, 13rem);
 
-  /* ---------- Обводка ---------- */
-  --border-width: 1px; /* для всіх контейнерів, полів, табів і карток */
+  /* ---------- Радіуси й обводки ---------- */
+  --radius-2: 2px;
+  --radius-4: 4px;
+  --radius-8: 8px;     /* картки й плитки */
+  --radius-24: 24px;
+  --radius-999: 999px; /* кнопки та пігулки */
+  --border-width: 1px;
+  --focus-width: 2px;
+  --focus-offset: 3px;
 
-  /* ---------- Фіксовані розміри ---------- */
-  --size-icon-20: 20px;     /* іконки в кнопках і полях */
-  --size-icon-24: 24px;     /* іконки навігації в сайдбарі */
-  --size-icon-button: 52px; /* Icon Button і Nav Item: 52 × 52 */
-  --size-sidebar: 98px;     /* ширина сайдбару */
+  /* ---------- Розміри елементів ---------- */
+  --size-control-sm: 40px;
+  --size-control-md: 48px;
+  --size-control-lg: 52px;
+  --size-chip: 28px;
+  --size-avatar: 36px;
+  --size-dot: 6px;
+  --size-mark: 7px;
+  --size-icon-16: 16px;
+  --size-icon-18: 18px;
+  --size-icon-20: 20px;
 
-  /* ---------- Сітка (налаштування проєкту, у Figma їх немає) ---------- */
-  --container-max-width: 1200px;
-  --container-padding: var(--space-16);
+  --size-switch-width: 36px;
+  --size-switch-height: 20px;
+  --size-switch-knob: 16px;
+  --size-progress: 4px;
+  --size-wave-bar: 2px;
+  --size-wave: 14px;
+  --size-slot: 56px;
+  --size-flower: 320px;
+
+  /* ---------- Прозорість і стани ---------- */
+  --opacity-disabled: 0.4;
+  --opacity-link-hover: 0.6;
+  --opacity-button-hover: 0.07;
+  --scale-pressed: 0.98;
+
+  /* ---------- Рух ---------- */
+  --ease-out: cubic-bezier(0.215, 0.61, 0.355, 1);
+  --ease-soft: cubic-bezier(0.4, 0, 0.2, 1);
+  --duration-fast: 0.2s;
+  --duration-base: 0.5s;
+  --duration-pulse: 2s;
+  --duration-beat: 1s;
+  --duration-breathe: 24s;
+  --blur-flower: 6px;
+
+  /* ---------- Сітка ---------- */
+  --container-max-width: 1280px;
+  --container-padding: clamp(1.25rem, 6vw - 0.375rem, 5rem);
+  --grid-gap: clamp(0.75rem, 0.5rem + 1vw, 1.5rem);
+  --tile-gap: var(--space-8);
+}
+
+/* Темний блок: додай клас .is-dark, і кольори всередині переключаться */
+.is-dark {
+  --color-bg-page: var(--color-dark-bg);
+  --color-bg-surface: var(--color-dark-surface);
+  --color-border-default: var(--color-dark-border);
+  --color-text-primary: var(--color-dark-text);
+  --color-text-secondary: var(--color-dark-text-secondary);
+  background-color: var(--color-bg-page);
+  color: var(--color-text-primary);
 }
 
 /*
- * БРЕЙКПОІНТИ (довідка — CSS-змінні не працюють у @media,
- * тому пишемо ці числа напряму, mobile-first через min-width):
+ * БРЕЙКПОІНТИ (довідка: CSS-змінні не працюють у @media,
+ * тому пишемо числа напряму, mobile-first через min-width):
  *   tablet:  @media (min-width: 768px)
  *   desktop: @media (min-width: 1024px)
  *   wide:    @media (min-width: 1440px)

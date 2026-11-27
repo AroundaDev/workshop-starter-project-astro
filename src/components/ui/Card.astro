@@ -1,45 +1,53 @@
 ---
 /*
- * Card — a block with a title and text.
- *
- * Usage:
- *   <Card title="Fast">Pages load in under a second.</Card>
- *
- * Props:
- *   title: the card heading
- * The text inside the tag goes into <slot />.
+ * Картка/плитка без тіні.
+ * surface: сіра плитка, raised: світла картка інтерфейсу, dark: темна,
+ * blush: виділена, glass: скляна панель поверх фото.
+ * lift: трохи піднімається при наведенні.
  */
 interface Props {
-	title: string;
+	variant?: 'surface' | 'raised' | 'dark' | 'blush' | 'glass';
+	as?: 'div' | 'article' | 'li';
+	lift?: boolean;
+	class?: string;
+	'data-state'?: 'hover';
 }
 
-const { title } = Astro.props;
+const { variant = 'surface', as: Element = 'div', lift = false, class: className, 'data-state': state } = Astro.props;
 ---
 
-<article class="card">
-	<h3 class="title">{title}</h3>
-	<div class="text"><slot /></div>
-</article>
+<Element data-state={state} class:list={['card', `card--${variant}`, { 'card--lift': lift, 'is-dark': variant === 'dark' }, className]}>
+	<slot />
+</Element>
 
 <style>
 	.card {
-		display: flex;
-		flex-direction: column;
-		gap: var(--space-8);
+		position: relative;
+		min-width: 0;
 		padding: var(--space-24);
-		border: var(--border-width) solid var(--color-border-card);
-		border-radius: var(--radius-16);
-		background-color: var(--color-bg-subtle);
+		overflow: hidden;
+		border-radius: var(--radius-8);
 	}
 
-	.title {
-		color: var(--color-text-strong);
+	@media (min-width: 768px) {
+		.card { padding: var(--space-32); }
 	}
 
-	.text {
-		color: var(--color-text-secondary);
-		font-size: var(--font-size-14);
-		line-height: var(--line-height-130);
-		letter-spacing: var(--letter-spacing-minus-1);
+	.card--surface { background: var(--color-bg-surface); }
+	.card--raised { background: var(--color-bg-raised); }
+	.card--blush { background: var(--color-blush); }
+
+	.card--glass {
+		background: var(--color-bg-glass-panel);
+		-webkit-backdrop-filter: blur(var(--blur-panel));
+		backdrop-filter: blur(var(--blur-panel));
+	}
+
+	.card--lift { transition: transform var(--duration-base) var(--ease-out); }
+
+.card--lift[data-state="hover"] { transform: translateY(calc(-1 * var(--space-4))); }
+
+	@media (hover: hover) and (pointer: fine) {
+		.card--lift:hover { transform: translateY(calc(-1 * var(--space-4))); }
 	}
 </style>

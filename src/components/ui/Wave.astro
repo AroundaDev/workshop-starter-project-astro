@@ -1,0 +1,40 @@
+---
+/* Звукова хвиля. active={false}: тиша. */
+interface Props {
+	active?: boolean;
+}
+
+const { active = true } = Astro.props;
+---
+
+<span class:list={['wave', { 'wave--active': active }]} aria-hidden="true">
+	<i></i><i></i><i></i><i></i><i></i>
+</span>
+
+<style>
+	.wave {
+		display: inline-flex;
+		align-items: center;
+		gap: var(--space-2);
+		height: var(--size-wave);
+	}
+
+	.wave i {
+		width: var(--size-wave-bar);
+		height: 100%;
+		border-radius: var(--radius-2);
+		background: currentColor;
+		transform: scaleY(0.3);
+	}
+
+	.wave--active i { animation: wave var(--duration-beat) ease-in-out infinite; }
+	.wave--active i:nth-child(2) { animation-delay: calc(var(--duration-beat) * 0.12); }
+	.wave--active i:nth-child(3) { animation-delay: calc(var(--duration-beat) * 0.24); }
+	.wave--active i:nth-child(4) { animation-delay: calc(var(--duration-beat) * 0.36); }
+	.wave--active i:nth-child(5) { animation-delay: calc(var(--duration-beat) * 0.48); }
+
+	@keyframes wave {
+		0%, 100% { transform: scaleY(0.3); }
+		50% { transform: scaleY(1); }
+	}
+</style>

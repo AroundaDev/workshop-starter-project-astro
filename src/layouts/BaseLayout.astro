@@ -8,19 +8,21 @@
  *     ...секції сторінки...
  *   </BaseLayout>
  */
+import '../styles/fonts.css';
 import '../styles/tokens.css';
 import '../styles/global.css';
 
 interface Props {
 	title?: string;
 	description?: string;
+	lang?: string;
 }
 
-const { title = 'Workshop Astro Starter', description = '' } = Astro.props;
+const { title = 'Nora', description = '', lang = 'en' } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="uk">
+<html lang={lang}>
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -29,6 +31,7 @@ const { title = 'Workshop Astro Starter', description = '' } = Astro.props;
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<link rel="icon" href="/favicon.ico" />
 		<meta name="generator" content={Astro.generator} />
+		<slot name="head" />
 	</head>
 	<body>
 		<slot />

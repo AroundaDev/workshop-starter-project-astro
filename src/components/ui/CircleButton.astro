@@ -1,0 +1,49 @@
+---
+/* Кругла кнопка з іконкою. label обов'язковий: його читають скрінрідери. */
+import type { HTMLAttributes } from 'astro/types';
+import Icon, { type IconName } from './Icon.astro';
+
+interface Props extends HTMLAttributes<'button'> {
+	icon: IconName;
+	label: string;
+}
+
+const { icon, label, class: className, ...rest } = Astro.props;
+---
+
+<button type="button" {...rest} class:list={['circle-btn', `circle-btn--${icon}`, className]} aria-label={label}>
+	<Icon name={icon} />
+</button>
+
+<style>
+	.circle-btn {
+		display: grid;
+		place-items: center;
+		flex: none;
+		width: var(--size-control-sm);
+		aspect-ratio: 1;
+		border-radius: 50%;
+		color: var(--color-ink);
+		background: var(--color-white);
+	}
+
+	.circle-btn :global(.icon) { transition: transform var(--duration-base) var(--ease-out); }
+
+	@media (hover: hover) and (pointer: fine) {
+		.circle-btn--arrow-right:hover:enabled :global(.icon) { transform: translateX(var(--focus-offset)); }
+		.circle-btn--arrow-left:hover:enabled :global(.icon) { transform: translateX(calc(-1 * var(--focus-offset))); }
+		.circle-btn--arrow-up-right:hover:enabled :global(.icon) { transform: translate(var(--space-2), calc(-1 * var(--space-2))); }
+	}
+
+.circle-btn:active:enabled,
+	.circle-btn[data-state="active"] { transform: scale(var(--scale-pressed)); }
+
+	.circle-btn--arrow-right[data-state="hover"] :global(.icon) { transform: translateX(var(--focus-offset)); }
+	.circle-btn--arrow-left[data-state="hover"] :global(.icon) { transform: translateX(calc(-1 * var(--focus-offset))); }
+	.circle-btn--arrow-up-right[data-state="hover"] :global(.icon) { transform: translate(var(--space-2), calc(-1 * var(--space-2))); }
+
+	.circle-btn:disabled {
+		opacity: var(--opacity-disabled);
+		cursor: default;
+	}
+</style>

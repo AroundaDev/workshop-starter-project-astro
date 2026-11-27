@@ -1,0 +1,33 @@
+---
+/*
+ * Заголовок секції: мітка (за бажанням), h1/h2 і вступний текст.
+ * Курсивне слово: <SectionHeading>Live before your coffee <em class="key">gets cold</em></SectionHeading>
+ */
+import PillLabel from './PillLabel.astro';
+
+interface Props {
+	as?: 'h1' | 'h2';
+	label?: string;
+	lead?: string;
+	align?: 'start' | 'center';
+}
+
+const { as: Heading = 'h2', label, lead, align = 'start' } = Astro.props;
+---
+
+<div class:list={['heading', `heading--${align}`]}>
+	{label && <PillLabel>{label}</PillLabel>}
+	<Heading><slot /></Heading>
+	{lead && <p class="text-lead">{lead}</p>}
+</div>
+
+<style>
+	.heading {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-24);
+	}
+
+	.heading--start { align-items: flex-start; }
+	.heading--center { align-items: center; text-align: center; }
+</style>

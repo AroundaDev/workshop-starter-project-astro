@@ -1,0 +1,32 @@
+---
+/* Мітка над заголовком: ◇ HOW IT WORKS */
+---
+
+<span class="pill-label"><span class="pill-label__mark" aria-hidden="true"></span><slot /></span>
+
+<style>
+	.pill-label {
+		display: inline-flex;
+		align-items: center;
+		gap: var(--space-8);
+		min-height: var(--size-chip);
+		padding: var(--space-4) var(--space-12);
+		border-radius: var(--radius-999);
+		font-family: var(--font-family-mono);
+		font-size: var(--font-size-11);
+		font-weight: var(--font-weight-medium);
+		line-height: var(--line-height-heading);
+		letter-spacing: var(--letter-spacing-caps);
+		text-transform: uppercase;
+		color: var(--color-text-secondary);
+		background: var(--color-bg-surface);
+	}
+
+	.pill-label__mark {
+		flex: none;
+		width: var(--size-mark);
+		height: var(--size-mark);
+		transform: rotate(45deg);
+		box-shadow: inset 0 0 0 var(--border-width) currentColor;
+	}
+</style>

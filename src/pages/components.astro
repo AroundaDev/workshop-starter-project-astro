@@ -1,0 +1,308 @@
+---
+/*
+ * Вітрина дизайн-системи (/components). Службова сторінка:
+ * перед публікацією сайту її можна видалити.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SectionHeading from '../components/ui/SectionHeading.astro';
+import Button from '../components/ui/Button.astro';
+import CircleButton from '../components/ui/CircleButton.astro';
+import PillLabel from '../components/ui/PillLabel.astro';
+import Chip from '../components/ui/Chip.astro';
+import Tag from '../components/ui/Tag.astro';
+import Avatar from '../components/ui/Avatar.astro';
+import LiveDot from '../components/ui/LiveDot.astro';
+import Card from '../components/ui/Card.astro';
+import Icon, { type IconName } from '../components/ui/Icon.astro';
+import TextLink from '../components/ui/TextLink.astro';
+import Tabs from '../components/ui/Tabs.astro';
+import Switch from '../components/ui/Switch.astro';
+import Progress from '../components/ui/Progress.astro';
+import Wave from '../components/ui/Wave.astro';
+import Bubble from '../components/ui/Bubble.astro';
+import CalendarSlot from '../components/ui/CalendarSlot.astro';
+import Accordion from '../components/ui/Accordion.astro';
+import Flower from '../components/ui/Flower.astro';
+import flower from '../assets/images/flower.jpg';
+
+const colors = [
+	'bg-page', 'bg-surface', 'bg-raised', 'text-primary', 'text-secondary', 'border-default',
+	'coral', 'peach', 'blush', 'dark-bg', 'dark-surface', 'white',
+	'ink', 'ink-high', 'ink-soft', 'dark-border', 'dark-text', 'dark-text-secondary',
+	'border-strong', 'marker', 'avatar-1', 'avatar-2', 'avatar-3', 'avatar-4',
+];
+
+const spaces = [2, 4, 6, 8, 12, 16, 24, 32, 40, 48, 64, 80, 96, 120, 160];
+const radii = [2, 4, 8, 24, 999];
+const states = [undefined, 'hover', 'focus', 'active'] as const;
+const variants = ['primary', 'quiet', 'outline'] as const;
+
+const icons: IconName[] = [
+	'arrow-left', 'arrow-right', 'arrow-up-right', 'arrows-clockwise', 'calendar-check',
+	'chat-text', 'check', 'credit-card', 'phone', 'play-circle', 'plus',
+];
+---
+
+<BaseLayout title="Components — Nora">
+	<meta name="robots" content="noindex" slot="head" />
+	<main class="container page">
+		<SectionHeading as="h1" label="Ink & Coral" lead="Tokens, type and base components for every Nora page.">
+			Nora design <em class="key">system</em>
+		</SectionHeading>
+
+		<section>
+			<p class="text-label">Colors</p>
+			<ul class="swatches">
+				{colors.map((name) => (
+					<li>
+						<span class="swatch" style={`background: var(--color-${name})`}></span>
+						<span class="text-small">{name}</span>
+					</li>
+				))}
+			</ul>
+		</section>
+
+		<section>
+			<p class="text-label">Typography</p>
+			<h1>Heading one</h1>
+			<p><span class="text-marker">Marker highlight</span></p>
+			<h2>Heading two with a <em class="key">key word</em></h2>
+			<h3>Heading three</h3>
+			<p class="text-manifesto">Manifesto text for one strong statement.</p>
+			<p class="text-quote">“A quote from a happy client.”</p>
+			<p class="text-metric">24/7</p>
+			<p class="text-lead">Lead paragraph that introduces a section.</p>
+			<p>Body text used across the pages.</p>
+			<p class="text-small">Small secondary text.</p>
+			<p class="text-label">Label</p>
+		</section>
+
+		<section>
+			<p class="text-label">Spacing and radius</p>
+			<ul class="scale">
+				{spaces.map((n) => (
+					<li><span class="scale__bar" style={`width: var(--space-${n})`}></span><span class="text-small">space-{n}</span></li>
+				))}
+			</ul>
+			<div class="row">
+				{radii.map((n) => <span class="radius text-small" style={`border-radius: var(--radius-${n})`}>{n}</span>)}
+			</div>
+		</section>
+
+		<section>
+			<p class="text-label">Buttons: default, hover, focus, pressed, disabled</p>
+			{variants.map((variant) => (
+				<div class="row">
+					{states.map((state) => (
+						<Button variant={variant} data-state={state}>{state ?? variant}</Button>
+					))}
+					<Button variant={variant} disabled>disabled</Button>
+				</div>
+			))}
+			<div class="row">
+				<Button arrow>Start free trial</Button>
+				<Button arrow data-state="hover">Arrow hover</Button>
+				<Button arrow disabled>Arrow disabled</Button>
+				<Button size="sm">Small</Button>
+				<Button href="#top" variant="outline">Link button</Button>
+				<Button href="#top" disabled>Disabled link</Button>
+			</div>
+			<Button full>Full width</Button>
+			<div class="row">
+				<CircleButton icon="arrow-left" label="Previous" />
+				<CircleButton icon="arrow-right" label="Next, hover" data-state="hover" />
+				<CircleButton icon="arrow-right" label="Next, focus" data-state="focus" />
+				<CircleButton icon="arrow-up-right" label="Open, pressed" data-state="active" />
+				<CircleButton icon="arrow-right" label="Disabled" disabled />
+			</div>
+		</section>
+
+		<section>
+			<p class="text-label">Links: default, hover, focus, current, inline</p>
+			<div class="row">
+				<TextLink href="#top">Default</TextLink>
+				<TextLink href="#top" data-state="hover">Hover</TextLink>
+				<TextLink href="#top" data-state="focus">Focus</TextLink>
+				<TextLink href="#top" aria-current="page">Current</TextLink>
+				<TextLink href="#top" variant="inline">Inline link</TextLink>
+			</div>
+		</section>
+
+		<section>
+			<p class="text-label">Tabs: selected, default, hover, focus, disabled</p>
+			<div>
+				<Tabs label="Billing period" items={[{ label: 'Monthly' }, { label: 'Yearly', badge: '−20%' }]} />
+			</div>
+			<Tabs
+				label="Features"
+				variant="pills"
+				items={[
+					{ label: 'Selected' },
+					{ label: 'Default' },
+					{ label: 'Hover', state: 'hover' },
+					{ label: 'Focus', state: 'focus' },
+					{ label: 'Disabled', disabled: true },
+				]}
+			/>
+		</section>
+
+		<section>
+			<p class="text-label">Switch: off, on, disabled</p>
+			<div class="row">
+				<Switch label="Off" />
+				<Switch label="On" checked />
+				<Switch label="Disabled off" disabled />
+				<Switch label="Disabled on" checked disabled />
+			</div>
+			<p class="text-label">Progress: 0, 40, 100</p>
+			<Progress label="Not started" value={0} />
+			<Progress label="Importing" value={40} />
+			<Progress label="Done" value={100} />
+			<p class="text-label">Wave: active, silent</p>
+			<div class="row"><Wave /><Wave active={false} /></div>
+		</section>
+
+		<section>
+			<p class="text-label">SMS bubbles and calendar slots</p>
+			<div class="cards cards--two">
+				<Card variant="raised">
+					<div class="stack">
+						<Bubble>10:15 please</Bubble>
+						<Bubble from="nora">You’re booked for Mon 10:15.</Bubble>
+						<Bubble typing />
+					</div>
+				</Card>
+				<Card variant="raised">
+					<CalendarSlot time="3:30" title="Emma Liu · Check-up" meta="45 min" />
+					<CalendarSlot time="4:30" variant="empty" />
+					<CalendarSlot time="5:30" title="Daniel Osei · Cleaning" meta="New · by Nora" variant="new" />
+				</Card>
+			</div>
+		</section>
+
+		<section>
+			<p class="text-label">Accordion: open, closed, hover, focus</p>
+			<div>
+				<Accordion question="Can I keep my current number?" open>Yes, via call forwarding.</Accordion>
+				<Accordion question="Can I cancel anytime?">Yes. There’s no contract.</Accordion>
+				<Accordion question="Hover state" state="hover">Answer.</Accordion>
+				<Accordion question="Focus state" state="focus">Answer.</Accordion>
+			</div>
+		</section>
+
+		<section>
+			<p class="text-label">Flower and glass panel</p>
+			<div class="bloom">
+				<Flower src={flower} position="60% 45%" />
+				<Card variant="glass"><h3>Glass panel</h3><p class="text-small">Translucent card over a photo.</p></Card>
+			</div>
+		</section>
+
+		<section>
+			<p class="text-label">Labels, chips, tags, avatars</p>
+			<div class="row">
+				<PillLabel>How it works</PillLabel>
+				<Chip><LiveDot /> Answering</Chip>
+				<Chip variant="solid" mono><LiveDot /> Live call</Chip>
+				<Chip variant="dark" mono>Most popular</Chip>
+				<Tag icon="calendar-check" variant="ink">Booked Thu 5:30</Tag>
+				<Tag>Returning patient</Tag>
+				<Avatar initials="LB" tone={1} />
+				<Avatar initials="TW" tone={2} />
+				<Avatar initials="AG" tone={3} />
+				<Avatar initials="KM" />
+			</div>
+		</section>
+
+		<section>
+			<p class="text-label">Icons</p>
+			<div class="row">{icons.map((name) => <Icon name={name} size={20} />)}</div>
+		</section>
+
+		<section>
+			<p class="text-label">Cards</p>
+			<div class="cards">
+				<Card lift data-state="hover"><h3>Hover</h3><p class="text-small">Lifted by 4px.</p></Card>
+				<Card lift><h3>Surface</h3><p class="text-small">Default tile.</p></Card>
+				<Card variant="raised" lift><h3>Raised</h3><p class="text-small">Interface card.</p></Card>
+				<Card variant="dark" lift><h3>Dark</h3><p class="text-small">Dark insert.</p></Card>
+				<Card variant="blush" lift><h3>Blush</h3><p class="text-small">Featured block.</p></Card>
+			</div>
+		</section>
+	</main>
+</BaseLayout>
+
+<style>
+	.page,
+	section {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-24);
+	}
+
+	.page > section,
+	section { min-width: 0; }
+
+	.page {
+		gap: var(--space-80);
+		padding-block: var(--space-64);
+	}
+
+	.row {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: var(--space-12);
+	}
+
+	.swatches,
+	.cards {
+		display: grid;
+		gap: var(--tile-gap);
+	}
+
+	.scale { display: grid; gap: var(--space-4); }
+	.scale li { display: flex; align-items: center; gap: var(--space-12); }
+	.scale__bar { height: var(--space-8); flex: none; background: var(--color-coral); }
+	.scale li .text-small { order: -1; width: var(--space-96); }
+
+	.radius {
+		display: grid;
+		place-items: center;
+		width: var(--space-64);
+		height: var(--space-64);
+		background: var(--color-bg-surface);
+	}
+
+	.stack { display: flex; flex-direction: column; gap: var(--space-8); }
+
+	.bloom {
+		position: relative;
+		display: grid;
+		place-items: center;
+		min-height: var(--size-flower);
+		padding: var(--space-24);
+		overflow: hidden;
+		border-radius: var(--radius-8);
+	}
+
+	.bloom :global(.card) { position: relative; z-index: 1; }
+
+	.swatches { grid-template-columns: repeat(auto-fill, minmax(8rem, 1fr)); }
+
+	.swatch {
+		display: block;
+		height: var(--space-64);
+		border-radius: var(--radius-8);
+		border: var(--border-width) solid var(--color-border-default);
+	}
+
+	@media (min-width: 768px) {
+		.cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+	}
+
+	@media (min-width: 1024px) {
+		.cards { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+		.cards--two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+	}
+</style>

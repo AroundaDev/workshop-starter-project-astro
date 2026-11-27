@@ -1,0 +1,65 @@
+---
+/* Повідомлення SMS. from="nora": темне праворуч. typing: «Nora друкує». */
+interface Props {
+	from?: 'client' | 'nora';
+	typing?: boolean;
+}
+
+const { from = 'client', typing = false } = Astro.props;
+---
+
+{
+	typing ? (
+		<div class="bubble bubble--typing" role="status" aria-label="Nora is typing">
+			<i /><i /><i />
+		</div>
+	) : (
+		<div class:list={['bubble', `bubble--${from}`]}>
+			<slot />
+		</div>
+	)
+}
+
+<style>
+	.bubble {
+		width: fit-content;
+		max-width: 80%;
+		padding: var(--space-8) var(--space-12);
+		border-radius: var(--radius-8);
+		font-size: var(--font-size-14);
+		line-height: var(--line-height-lead);
+	}
+
+	.bubble--client { background: var(--color-bg-surface); }
+
+	.bubble--nora {
+		margin-inline-start: auto;
+		color: var(--color-text-on-ink);
+		background: var(--color-ink);
+	}
+
+	.bubble--typing {
+		display: flex;
+		gap: var(--space-4);
+		margin-inline-start: auto;
+		padding-block: var(--space-12);
+		color: var(--color-text-secondary);
+		background: var(--color-bg-surface);
+	}
+
+	.bubble--typing i {
+		width: var(--size-dot);
+		height: var(--size-dot);
+		border-radius: 50%;
+		background: currentColor;
+		animation: typing var(--duration-beat) var(--ease-soft) infinite;
+	}
+
+	.bubble--typing i:nth-child(2) { animation-delay: calc(var(--duration-beat) * 0.15); }
+	.bubble--typing i:nth-child(3) { animation-delay: calc(var(--duration-beat) * 0.3); }
+
+	@keyframes typing {
+		0%, 60%, 100% { opacity: 0.25; transform: translateY(0); }
+		30% { opacity: 1; transform: translateY(calc(-1 * var(--space-2))); }
+	}
+</style>

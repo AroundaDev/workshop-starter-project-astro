@@ -1,0 +1,51 @@
+---
+/* Рядок календаря. empty: вільно, booked: зайнято, new: щойно записала Nora. */
+interface Props {
+	time: string;
+	title?: string;
+	meta?: string;
+	variant?: 'empty' | 'booked' | 'new';
+}
+
+const { time, title, meta, variant = 'booked' } = Astro.props;
+---
+
+<div class="row">
+	<span class="row__time">{time}</span>
+	<div class:list={['slot', `slot--${variant}`]}>
+		{variant === 'empty' ? <span class="sr-only">Free</span> : (<><span>{title}</span>{meta && <small>{meta}</small>}</>)}
+	</div>
+</div>
+
+<style>
+	.row {
+		display: grid;
+		grid-template-columns: var(--space-48) minmax(0, 1fr);
+		min-height: var(--size-slot);
+		border-top: var(--border-width) solid var(--color-border-default);
+		font-size: var(--font-size-13);
+	}
+
+	.row__time {
+		padding-block-start: var(--space-8);
+		font-family: var(--font-family-mono);
+		font-size: var(--font-size-11);
+		color: var(--color-text-secondary);
+	}
+
+	.slot {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: space-between;
+		gap: var(--space-8);
+		margin-block: var(--space-6);
+		padding: var(--space-6) var(--space-12);
+		border-radius: var(--radius-4);
+	}
+
+	.slot--booked { background: var(--color-bg-surface); }
+	.slot--booked small { color: var(--color-text-secondary); }
+	.slot--new { color: var(--color-text-on-ink); background: var(--color-ink); }
+	.slot--new small { color: var(--color-text-on-ink-muted); }
+</style>
