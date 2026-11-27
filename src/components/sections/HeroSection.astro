@@ -1,0 +1,241 @@
+---
+/* Hero: заголовок, дві кнопки та bento-плитки. */
+import { Image } from 'astro:assets';
+import SectionHeading from '../ui/SectionHeading.astro';
+import Button from '../ui/Button.astro';
+import Card from '../ui/Card.astro';
+import Chip from '../ui/Chip.astro';
+import LiveDot from '../ui/LiveDot.astro';
+import Flower from '../ui/Flower.astro';
+import StatusRow from '../ui/StatusRow.astro';
+import PersonPill from '../ui/PersonPill.astro';
+import LiveCall from './LiveCall.astro';
+import photo from '../../assets/images/hero-front-desk.jpg';
+import flower from '../../assets/images/flower.jpg';
+
+const people = [
+	['DW', 'Dana Whitfield', 'Regular · Tue 4 pm'],
+	['MR', 'Maya Reyes', 'Massage · 6 visits'],
+	['JT', 'James Turner', 'New client'],
+	['AL', 'Aisha Lopez', 'Facial · monthly'],
+	['SK', 'Sam Kim', 'Gift card'],
+	['EB', 'Ella Brooks', 'Massage · 2 visits'],
+	['RN', 'Rohan Nair', 'Regular · Fri 6 pm'],
+	['CF', 'Chloe Fox', 'New client'],
+] as const;
+const tone = (index: number) => ((index % 4) + 1) as 1 | 2 | 3 | 4;
+---
+
+<section class="hero">
+	<div class="container">
+		<SectionHeading
+			as="h1"
+			align="center"
+			label="AI receptionist for service businesses"
+			labelMark={false}
+			lead="Nora answers your business phone and texts 24/7, books straight into your calendar and hands over to you when a caller asks for a person. Keep your number."
+		>
+			Every call answered,<br />every client <em class="key">booked</em>
+		</SectionHeading>
+
+		<div class="hero__actions">
+			<Button href="#pricing" arrow>Start free trial</Button>
+			<Button href="#features" variant="quiet">Hear a call</Button>
+		</div>
+
+		<div class="bento">
+			<div class="bento__photo">
+				<Card flush lift>
+					<figure>
+						<Image src={photo} alt="Front-desk assistant working on a laptop" widths={[400, 700, 1000]} sizes="(min-width: 1024px) 40vw, 100vw" loading="eager" />
+						<figcaption><Chip><LiveDot />Answering as Juniper Spa</Chip></figcaption>
+					</figure>
+				</Card>
+			</div>
+
+			<div class="bento__setup">
+				<Card flush lift>
+					<Flower src={flower} position="60% 45%" />
+					<div class="statuses" role="group" aria-label="Setup progress">
+						<div class="statuses__item"><StatusRow icon="check" label="Account set up">Done</StatusRow></div>
+						<div class="statuses__item"><StatusRow icon="check" label="Contacts imported">1,284</StatusRow></div>
+						<div class="statuses__item"><StatusRow icon="phone" label="(415) 555-0142" variant="dark"><LiveDot />Live</StatusRow></div>
+					</div>
+				</Card>
+			</div>
+
+			<div class="bento__contacts">
+				<Card flush lift>
+					<div class="contacts">
+						<div class="contacts__head"><span class="text-label">Importing</span><span class="text-label">1,284</span></div>
+						<div class="contacts__flow" aria-hidden="true">
+							<div class="contacts__track">
+								{[0, 1].map(() => (
+									<ul>
+										{people.map(([initials, name, note], index) => (
+											<li><PersonPill initials={initials} name={name} note={note} tone={tone(index)} /></li>
+										))}
+									</ul>
+								))}
+							</div>
+						</div>
+					</div>
+				</Card>
+			</div>
+
+			<div class="bento__call">
+				<Card variant="dark" flush lift>
+					<div class="call"><LiveCall /></div>
+				</Card>
+			</div>
+		</div>
+	</div>
+</section>
+
+<style>
+	.hero {
+		padding-block: var(--space-48) var(--space-64);
+		text-align: center;
+	}
+
+	.hero__actions {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-12);
+		margin-block-start: var(--space-40);
+	}
+
+	.bento {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr);
+		gap: var(--tile-gap);
+		margin-block-start: var(--space-48);
+		text-align: start;
+	}
+
+	.bento > div { display: grid; min-width: 0; }
+
+	figure {
+		position: relative;
+		aspect-ratio: 4 / 5;
+	}
+
+	figure img {
+		position: absolute;
+		inset: 0;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		object-position: 50% 30%;
+	}
+
+	figcaption {
+		position: absolute;
+		inset: auto var(--space-12) var(--space-12);
+	}
+
+	.bento__setup,
+	.bento__contacts { height: var(--size-flower); }
+
+	.statuses {
+		position: relative;
+		z-index: 1;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		gap: var(--space-8);
+		height: 100%;
+		padding: var(--space-24);
+	}
+
+	.statuses__item { animation: rise var(--duration-beat) var(--ease-out) backwards; }
+	.statuses__item:nth-child(1) { animation-delay: calc(var(--duration-beat) * 0.3); }
+	.statuses__item:nth-child(2) { animation-delay: calc(var(--duration-beat) * 0.9); }
+	.statuses__item:nth-child(3) { animation-delay: calc(var(--duration-beat) * 1.5); }
+
+	@keyframes rise {
+		from { opacity: 0; transform: translateY(var(--space-8)); }
+	}
+
+	.contacts {
+		display: flex;
+		flex-direction: column;
+		height: 100%;
+		padding-block-start: var(--space-24);
+	}
+
+	.contacts__head {
+		display: flex;
+		justify-content: space-between;
+		padding-inline: var(--space-24);
+	}
+
+	.contacts__flow {
+		position: relative;
+		flex: 1;
+		min-height: 0;
+		margin-block-start: var(--space-16);
+		overflow: hidden;
+		-webkit-mask-image: linear-gradient(to bottom, transparent, var(--color-ink) 18%, var(--color-ink) 78%, transparent);
+		mask-image: linear-gradient(to bottom, transparent, var(--color-ink) 18%, var(--color-ink) 78%, transparent);
+	}
+
+	.contacts__track {
+		position: absolute;
+		inset: 0 0 auto;
+		animation: flow var(--duration-flow) linear infinite;
+	}
+
+	.contacts__track ul {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-8);
+		padding: 0 var(--space-16) var(--space-8);
+	}
+
+	.contacts__track li:nth-child(even) { margin-inline-start: var(--space-24); }
+
+	@keyframes flow {
+		to { transform: translateY(-50%); }
+	}
+
+	.call {
+		display: grid;
+		place-items: center;
+		min-height: var(--size-flower);
+		height: 100%;
+		padding: var(--space-24);
+	}
+
+	@media (min-width: 768px) {
+		.hero { padding-block: var(--space-80); }
+
+		.hero__actions {
+			flex-direction: row;
+			justify-content: center;
+		}
+
+		.bento {
+			grid-template-columns: repeat(12, minmax(0, 1fr));
+			margin-block-start: var(--space-64);
+		}
+
+		.bento__photo { grid-column: span 12; }
+		.bento__setup { grid-column: span 7; }
+		.bento__contacts { grid-column: span 5; }
+		.bento__call { grid-column: span 12; }
+		figure { aspect-ratio: 16 / 11; }
+	}
+
+	@media (min-width: 1024px) {
+		.bento { grid-template-rows: repeat(2, var(--size-tile-row)); }
+		.bento__photo { grid-column: span 5; grid-row: span 2; }
+		.bento__setup { grid-column: span 4; }
+		.bento__contacts { grid-column: span 3; }
+		.bento__call { grid-column: span 7; }
+		.bento__setup,
+		.bento__contacts { height: auto; min-height: 0; }
+		.call { min-height: 0; }
+		figure { aspect-ratio: auto; height: 100%; }
+	}
+</style>

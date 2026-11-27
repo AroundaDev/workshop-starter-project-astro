@@ -5,6 +5,7 @@
  */
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Header from '../components/sections/Header.astro';
+import HeroSection from '../components/sections/HeroSection.astro';
 ---
 
 <BaseLayout
@@ -12,5 +13,7 @@ import Header from '../components/sections/Header.astro';
 	description="Nora answers your business calls and texts 24/7, books appointments into your calendar and follows up with anyone you missed."
 >
 	<Header />
-	<main id="top"></main>
+	<main id="top">
+		<HeroSection />
+	</main>
 </BaseLayout>

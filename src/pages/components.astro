@@ -24,6 +24,9 @@ import CalendarSlot from '../components/ui/CalendarSlot.astro';
 import Accordion from '../components/ui/Accordion.astro';
 import Logo from '../components/ui/Logo.astro';
 import MenuButton from '../components/ui/MenuButton.astro';
+import StatusRow from '../components/ui/StatusRow.astro';
+import PersonPill from '../components/ui/PersonPill.astro';
+import TranscriptLine from '../components/ui/TranscriptLine.astro';
 import Flower from '../components/ui/Flower.astro';
 import flower from '../assets/images/flower.jpg';
 
@@ -172,7 +175,18 @@ const icons: IconName[] = [
 			<Progress label="Importing" value={40} />
 			<Progress label="Done" value={100} />
 			<p class="text-label">Wave: active, silent</p>
-			<div class="row"><Wave /><Wave active={false} /></div>
+			<div class="row"><Wave /><Wave active={false} /><Wave size="lg" /></div>
+		</section>
+
+		<section>
+			<p class="text-label">Status rows, contact pill, transcript</p>
+			<StatusRow icon="check" label="Account set up">Done</StatusRow>
+			<StatusRow icon="phone" label="(415) 555-0142" variant="dark">Live</StatusRow>
+			<PersonPill initials="DW" name="Dana Whitfield" note="Regular · Tue 4 pm" tone={1} />
+			<div>
+				<TranscriptLine who="Caller">Thursday, please.</TranscriptLine>
+				<TranscriptLine who="Nora" nora>Done.</TranscriptLine>
+			</div>
 		</section>
 
 		<section>
@@ -215,6 +229,7 @@ const icons: IconName[] = [
 			<p class="text-label">Labels, chips, tags, avatars</p>
 			<div class="row">
 				<PillLabel>How it works</PillLabel>
+				<PillLabel mark={false}>Without mark</PillLabel>
 				<Chip><LiveDot /> Answering</Chip>
 				<Chip variant="solid" mono><LiveDot /> Live call</Chip>
 				<Chip variant="dark" mono>Most popular</Chip>

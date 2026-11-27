@@ -56,14 +56,17 @@
 | `Tabs` | segmented, pills; badge | default, selected, hover, focus, disabled |
 | `Switch` | | off, on, focus, disabled |
 | `Accordion` | | closed, open, hover, focus |
-| `Card` | surface, raised, dark, blush, glass; lift | default, hover (з lift) |
+| `Card` | surface, raised, dark, blush, glass; lift; flush (без відступів) | default, hover (з lift) |
 | `Progress` | value 0–100 | порожній, у процесі, повний |
-| `Wave` | | активна, тиша |
+| `Wave` | md, lg | активна, тиша |
+| `StatusRow` | glass, dark | статичний |
+| `PersonPill` | tone 1–4 | статичний |
+| `TranscriptLine` | клієнт, Nora | статичний |
 | `Bubble` | client, nora | повідомлення, друкує |
 | `CalendarSlot` | booked, new, empty | |
 | `Chip` | glass, solid, dark; mono | статичний |
 | `Tag` | default, ink; icon | статичний |
-| `PillLabel`, `SectionHeading` | align start, center | статичні |
+| `PillLabel`, `SectionHeading` | align start, center; з ромбиком або без (у hero без) | статичні |
 | `Avatar` | tone 1–4 | статичний |
 | `LiveDot` | | пульсує |
 | `Logo` | | default, focus |
@@ -80,7 +83,8 @@
 - **Плитки (bento):** без тіней, щілина `--tile-gap`, суміш фото, сірих і темних плиток.
 - **Квітка:** `<Flower>` у блоці з `position: relative`.
 - **Скло:** `Card variant="glass"` або `Chip` поверх фото.
-- **Темні вставки:** `Card variant="dark"` або `.is-dark`.
+- **Темні вставки:** `Card variant="dark"` або `.is-dark`. Світлий блок усередині темного: `.is-light` (`Card` raised, blush і glass додають його самі).
+- **Hero** (`sections/HeroSection`): плитки в 1 колонку, з 768px сітка 12 колонок, з 1024px два ряди по `--size-tile-row`.
 - **Футер:** темний, з гігантським словом «Nora» (`--font-size-wordmark`).
 - **Шапка** (`sections/Header`): прилипає вгорі, висота `--size-header`, фон `--color-bg-header`, тонка лінія після прокрутки.
 - **Мобільне меню** (`sections/MobileMenu`): до 1024px, на весь екран, пункти шрифтом `--font-size-menu`. До 480px кнопка пробної версії є тільки в меню, до 768px «Log in» теж.

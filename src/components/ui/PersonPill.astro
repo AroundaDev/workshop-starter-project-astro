@@ -1,0 +1,42 @@
+---
+/* Контакт-пігулка: аватар, ім'я та примітка. */
+import Avatar from './Avatar.astro';
+
+interface Props {
+	initials: string;
+	name: string;
+	note: string;
+	tone?: 1 | 2 | 3 | 4;
+}
+
+const { initials, name, note, tone } = Astro.props;
+---
+
+<div class="person">
+	<Avatar initials={initials} tone={tone} />
+	<span class="person__text"><b>{name}</b><small>{note}</small></span>
+</div>
+
+<style>
+	.person {
+		display: flex;
+		align-items: center;
+		gap: var(--space-8);
+		width: max-content;
+		max-width: 100%;
+		padding: var(--space-4) var(--space-12) var(--space-4) var(--space-6);
+		overflow: hidden;
+		border-radius: var(--radius-999);
+		background: var(--color-bg-raised);
+	}
+
+	.person__text {
+		display: flex;
+		flex-direction: column;
+		white-space: nowrap;
+		line-height: var(--line-height-heading);
+	}
+
+	b { font-size: var(--font-size-13); font-weight: var(--font-weight-medium); }
+	small { font-size: var(--font-size-11); color: var(--color-text-secondary); }
+</style>

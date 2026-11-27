@@ -1,8 +1,13 @@
 ---
-/* Мітка над заголовком: ◇ HOW IT WORKS */
+/* Мітка над заголовком: ◇ HOW IT WORKS. mark={false} прибирає ромбик. */
+interface Props {
+	mark?: boolean;
+}
+
+const { mark = true } = Astro.props;
 ---
 
-<span class="pill-label"><span class="pill-label__mark" aria-hidden="true"></span><slot /></span>
+<span class="pill-label">{mark && <span class="pill-label__mark" aria-hidden="true"></span>}<slot /></span>
 
 <style>
 	.pill-label {

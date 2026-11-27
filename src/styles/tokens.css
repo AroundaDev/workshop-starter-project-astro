@@ -143,6 +143,12 @@
   --size-icon-20: 20px;
 
   --size-header: 72px;
+  --size-row: 44px;
+  --size-tile-row: 296px;
+  --size-live-width: 420px;
+  --size-live-body: 128px;
+  --size-wave-lg: 28px;
+  --size-wave-bar-lg: 3px;
   --size-menu-button: 44px;
   --size-menu-line: 1.5px;
   --size-switch-width: 36px;
@@ -168,6 +174,7 @@
   --duration-pulse: 2s;
   --duration-beat: 1s;
   --duration-breathe: 24s;
+  --duration-flow: 32s;
   --blur-flower: 6px;
 
   /* ---------- Сітка ---------- */
@@ -185,6 +192,15 @@
   --color-text-primary: var(--color-dark-text);
   --color-text-secondary: var(--color-dark-text-secondary);
   background-color: var(--color-bg-page);
+  color: var(--color-text-primary);
+}
+
+/* Світлий блок усередині темного: повертає світлі кольори */
+.is-light {
+  --color-bg-surface: #e9e9e5;
+  --color-border-default: #dadad4;
+  --color-text-primary: #15171c;
+  --color-text-secondary: #5f616a;
   color: var(--color-text-primary);
 }
 

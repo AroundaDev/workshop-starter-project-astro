@@ -2,12 +2,13 @@
 /* Звукова хвиля. active={false}: тиша. */
 interface Props {
 	active?: boolean;
+	size?: 'md' | 'lg';
 }
 
-const { active = true } = Astro.props;
+const { active = true, size = 'md' } = Astro.props;
 ---
 
-<span class:list={['wave', { 'wave--active': active }]} aria-hidden="true">
+<span class:list={['wave', `wave--${size}`, { 'wave--active': active }]} aria-hidden="true">
 	<i></i><i></i><i></i><i></i><i></i>
 </span>
 
@@ -26,6 +27,9 @@ const { active = true } = Astro.props;
 		background: currentColor;
 		transform: scaleY(0.3);
 	}
+
+	.wave--lg { height: var(--size-wave-lg); gap: var(--focus-offset); }
+	.wave--lg i { width: var(--size-wave-bar-lg); }
 
 	.wave--active i { animation: wave var(--duration-beat) ease-in-out infinite; }
 	.wave--active i:nth-child(2) { animation-delay: calc(var(--duration-beat) * 0.12); }

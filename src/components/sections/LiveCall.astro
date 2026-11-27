@@ -1,0 +1,155 @@
+---
+/*
+ * «Живий» дзвінок у hero: дзвонить → слухає → розмова → запис у календар, по колу.
+ * Без анімації (або без JavaScript) видно фінальний стан із записом.
+ */
+import Card from '../ui/Card.astro';
+import Icon from '../ui/Icon.astro';
+import LiveDot from '../ui/LiveDot.astro';
+import Wave from '../ui/Wave.astro';
+import Tag from '../ui/Tag.astro';
+import TranscriptLine from '../ui/TranscriptLine.astro';
+import CalendarSlot from '../ui/CalendarSlot.astro';
+
+const done = 'Calendar · Thu, Mar 18';
+---
+
+<div class="live-call" role="group" aria-label="Nora answers a call and books it" data-live-call>
+	<Card variant="raised" flush>
+		<div class="live-call__card">
+			<div class="live-call__head">
+				<Icon name="phone" size={16} />
+				<span class="text-label" data-title>{done}</span>
+				<span class="text-label live-call__timer" data-timer>00:24</span>
+			</div>
+			<div class="live-call__body">
+				<div class="step" data-step="ring">
+					<div class="step__row"><span class="step__ring"><LiveDot /></span><span>Ringing… Nora picks up on the first ring</span></div>
+				</div>
+				<div class="step" data-step="talk">
+					<div class="step__row"><Wave size="lg" /><span class="text-small">Nora is listening</span></div>
+				</div>
+				<div class="step" data-step="text">
+					<TranscriptLine who="Caller">Anything for a deep-tissue massage on Thursday?</TranscriptLine>
+					<TranscriptLine who="Nora" nora>Thursday 3:30 with Alex is free. Booking it now.</TranscriptLine>
+				</div>
+				<div class="step is-active" data-step="book">
+					<CalendarSlot time="2:30" title="Check-up" meta="45 min" />
+					<CalendarSlot time="3:30" title="Maya R. · Deep tissue" meta="New · by Nora" variant="new" />
+				</div>
+			</div>
+		</div>
+	</Card>
+	<div class="live-call__meta is-active" data-meta>
+		<span class="text-label live-call__note"><Icon name="check" size={16} />Booked by Nora · text sent</span>
+		<Tag>Booked</Tag>
+	</div>
+</div>
+
+<script>
+	const root = document.querySelector<HTMLElement>('[data-live-call]');
+
+	if (root && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+		const states = [
+			{ step: 'ring', title: 'Incoming call · Maya R.', time: '00:00', ms: 2700 },
+			{ step: 'talk', title: 'On call · Maya R.', time: '00:03', ms: 2700 },
+			{ step: 'text', title: 'On call · Maya R.', time: '00:09', ms: 5600 },
+			{ step: 'book', title: 'Calendar · Thu, Mar 18', time: '00:24', ms: 5000 },
+		];
+		const title = root.querySelector('[data-title]')!;
+		const timer = root.querySelector('[data-timer]')!;
+		const meta = root.querySelector('[data-meta]')!;
+
+		const show = (index: number) => {
+			const state = states[index];
+			root.querySelectorAll<HTMLElement>('[data-step]').forEach((el) => el.classList.toggle('is-active', el.dataset.step === state.step));
+			meta.classList.toggle('is-active', state.step === 'book');
+			title.textContent = state.title;
+			timer.textContent = state.time;
+			window.setTimeout(() => show((index + 1) % states.length), state.ms);
+		};
+		show(0);
+	}
+</script>
+
+<style>
+	.live-call {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-12);
+		width: min(100%, var(--size-live-width));
+	}
+
+	.live-call__card { padding: var(--space-16); }
+
+	.live-call__head {
+		display: flex;
+		align-items: center;
+		gap: var(--space-8);
+		padding-block-end: var(--space-12);
+		border-bottom: var(--border-width) solid var(--color-border-default);
+	}
+
+	.live-call__head .text-label:first-of-type { flex: 1; }
+	.live-call__timer { font-variant-numeric: tabular-nums; }
+
+	/* всі стани лежать один на одному, тому висота не стрибає */
+	.live-call__body {
+		display: grid;
+		min-height: var(--size-live-body);
+		margin-block-start: var(--space-12);
+	}
+
+	.step {
+		grid-area: 1 / 1;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		gap: var(--space-8);
+		min-width: 0;
+		visibility: hidden;
+		opacity: 0;
+		transition: opacity var(--duration-base) var(--ease-soft), visibility var(--duration-base);
+	}
+
+	.step__row {
+		display: flex;
+		align-items: center;
+		gap: var(--space-12);
+		font-size: var(--font-size-14);
+	}
+
+	.step__ring {
+		display: grid;
+		place-items: center;
+		flex: none;
+		width: var(--size-control-sm);
+		height: var(--size-control-sm);
+		border-radius: 50%;
+		background: var(--color-bg-surface);
+	}
+
+	.live-call__meta {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: space-between;
+		gap: var(--space-8);
+		padding-inline: var(--space-4);
+		visibility: hidden;
+		opacity: 0;
+		transition: opacity var(--duration-base) var(--ease-soft), visibility var(--duration-base);
+	}
+
+	.live-call__note {
+		display: flex;
+		align-items: center;
+		gap: var(--space-6);
+	}
+
+	.step.is-active,
+	.live-call__meta.is-active {
+		visibility: visible;
+		opacity: 1;
+	}
+</style>

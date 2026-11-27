@@ -8,15 +8,16 @@ import PillLabel from './PillLabel.astro';
 interface Props {
 	as?: 'h1' | 'h2';
 	label?: string;
+	labelMark?: boolean;
 	lead?: string;
 	align?: 'start' | 'center';
 }
 
-const { as: Heading = 'h2', label, lead, align = 'start' } = Astro.props;
+const { as: Heading = 'h2', label, labelMark = true, lead, align = 'start' } = Astro.props;
 ---
 
 <div class:list={['heading', `heading--${align}`]}>
-	{label && <PillLabel>{label}</PillLabel>}
+	{label && <PillLabel mark={labelMark}>{label}</PillLabel>}
 	<Heading><slot /></Heading>
 	{lead && <p class="text-lead">{lead}</p>}
 </div>

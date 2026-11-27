@@ -9,14 +9,16 @@ interface Props {
 	variant?: 'surface' | 'raised' | 'dark' | 'blush' | 'glass';
 	as?: 'div' | 'article' | 'li';
 	lift?: boolean;
+	/** без внутрішніх відступів: для фото та складних плиток */
+	flush?: boolean;
 	class?: string;
 	'data-state'?: 'hover';
 }
 
-const { variant = 'surface', as: Element = 'div', lift = false, class: className, 'data-state': state } = Astro.props;
+const { variant = 'surface', as: Element = 'div', lift = false, flush = false, class: className, 'data-state': state } = Astro.props;
 ---
 
-<Element data-state={state} class:list={['card', `card--${variant}`, { 'card--lift': lift, 'is-dark': variant === 'dark' }, className]}>
+<Element data-state={state} class:list={['card', `card--${variant}`, { 'card--lift': lift, 'card--flush': flush, 'is-dark': variant === 'dark', 'is-light': ['raised', 'blush', 'glass'].includes(variant) }, className]}>
 	<slot />
 </Element>
 
@@ -32,6 +34,8 @@ const { variant = 'surface', as: Element = 'div', lift = false, class: className
 	@media (min-width: 768px) {
 		.card { padding: var(--space-32); }
 	}
+
+	.card--flush { padding: 0; }
 
 	.card--surface { background: var(--color-bg-surface); }
 	.card--raised { background: var(--color-bg-raised); }
