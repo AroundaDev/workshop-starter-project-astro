@@ -11,6 +11,9 @@ const { href = '/' } = Astro.props;
 
 <style>
 	.logo {
+		display: inline-block;
+		/* великі літери в цьому шрифті сидять вище середини рядка: вирівнюємо з кнопками */
+		transform: translateY(0.11em);
 		font-family: var(--font-family-display);
 		font-size: var(--font-size-28);
 		line-height: var(--line-height-none);

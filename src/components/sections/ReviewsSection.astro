@@ -71,6 +71,23 @@ import mike from '../../assets/images/review-mike.jpg';
 <script>
 	const stack = document.querySelector<HTMLElement>('[data-stack]');
 
+	if (stack) {
+		// усі картки заввишки з найвищу, щоб наступна повністю закривала попередню
+		const equalize = () => {
+			stack.style.removeProperty('--review-height');
+			const tallest = Math.max(...[...stack.querySelectorAll<HTMLElement>('.pair')].map((pair) => pair.offsetHeight));
+			stack.style.setProperty('--review-height', tallest + 'px');
+		};
+		let width = 0;
+		// перераховуємо лише коли змінюється ширина: висоту змінює сам скрипт
+		new ResizeObserver(([entry]) => {
+			if (entry.contentRect.width === width) return;
+			width = entry.contentRect.width;
+			equalize();
+		}).observe(stack);
+		document.fonts.ready.then(equalize);
+	}
+
 	if (stack && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
 		const items = [...stack.querySelectorAll<HTMLElement>(':scope > li')];
 		// 0: наступна картка ще за екраном, 1: вона вже лягла зверху
@@ -126,6 +143,7 @@ import mike from '../../assets/images/review-mike.jpg';
 	.pair {
 		display: grid;
 		grid-template-columns: minmax(0, 1fr);
+		min-height: var(--review-height, auto);
 	}
 
 	.pair > :global(.review + .review) { border-top: var(--border-width) solid var(--color-border-default); }
@@ -136,7 +154,7 @@ import mike from '../../assets/images/review-mike.jpg';
 
 		.pair {
 			grid-template-columns: repeat(12, minmax(0, 1fr));
-			min-height: var(--size-review);
+			min-height: var(--review-height, var(--size-review));
 		}
 
 		.pair > :global(*) { grid-column: span 6; }

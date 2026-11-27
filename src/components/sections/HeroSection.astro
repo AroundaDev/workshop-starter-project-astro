@@ -189,11 +189,10 @@ const tone = (index: number) => ((index % 4) + 1) as 1 | 2 | 3 | 4;
 	.contacts__track ul {
 		display: flex;
 		flex-direction: column;
+		align-items: center;
 		gap: var(--space-8);
 		padding: 0 var(--space-16) var(--space-8);
 	}
-
-	.contacts__track li:nth-child(even) { margin-inline-start: var(--space-24); }
 
 	@keyframes flow {
 		to { transform: translateY(-50%); }
@@ -220,6 +219,8 @@ const tone = (index: number) => ((index % 4) + 1) as 1 | 2 | 3 | 4;
 			margin-block-start: var(--space-64);
 		}
 
+		.contacts__track ul { align-items: flex-start; }
+		.contacts__track li:nth-child(even) { margin-inline-start: var(--space-24); }
 		.bento__photo { grid-column: span 12; }
 		.bento__setup { grid-column: span 7; }
 		.bento__contacts { grid-column: span 5; }

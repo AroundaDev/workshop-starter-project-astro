@@ -71,10 +71,11 @@ const plans = [
 		margin-block-start: var(--space-24);
 	}
 
+	/* телефон: одна під одною; з 768px усі в один рядок */
 	.pricing__notes {
 		display: flex;
-		flex-wrap: wrap;
-		gap: var(--space-12) var(--space-32);
+		flex-direction: column;
+		gap: var(--space-12);
 		margin-block-start: var(--space-24);
 		font-size: var(--font-size-14);
 		color: var(--color-text-secondary);
@@ -87,6 +88,11 @@ const plans = [
 	}
 
 	@media (min-width: 768px) {
+		.pricing__notes {
+			flex-direction: row;
+			gap: var(--space-32);
+		}
+
 		.pricing__head {
 			grid-template-columns: repeat(12, minmax(0, 1fr));
 			column-gap: var(--grid-gap);

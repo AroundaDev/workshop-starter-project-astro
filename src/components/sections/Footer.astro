@@ -1,0 +1,164 @@
+---
+/*
+ * Темний футер: опис, три групи посилань, гігантське «Nora» і копірайт.
+ * «Завіса»: футер лежить під сторінкою, і вона наїжджає на нього при прокрутці вгору.
+ */
+import TextLink from '../ui/TextLink.astro';
+
+const groups = [
+	{
+		title: 'Product',
+		links: [
+			{ label: 'How it works', href: '#how' },
+			{ label: 'Features', href: '#features' },
+			{ label: 'Pricing', href: '#pricing' },
+		],
+	},
+	{ title: 'Company', links: [{ label: 'Contact', href: '#' }, { label: 'Log in', href: '#' }] },
+	{ title: 'Legal', links: [{ label: 'Privacy', href: '#' }, { label: 'Terms', href: '#' }] },
+];
+---
+
+<footer class="footer is-dark">
+	<div class="container">
+		<div class="footer__grid">
+			<p class="text-small footer__note">
+				Nora Labs, Inc. · San Francisco, CA. The AI receptionist for clinics, salons, studios and home-service teams.
+			</p>
+			{groups.map((group) => (
+				<nav class="footer__nav" aria-label={group.title}>
+					<p class="text-label">{group.title}</p>
+					<ul>
+						{group.links.map((link) => <li><TextLink href={link.href}>{link.label}</TextLink></li>)}
+					</ul>
+				</nav>
+			))}
+		</div>
+
+		<div class="footer__wordmark" aria-hidden="true"><span data-wordmark>Nora</span></div>
+
+		<div class="footer__copy">
+			<span>© 2026 Nora Labs, Inc.</span>
+			<span>Every call answered.</span>
+		</div>
+	</div>
+</footer>
+
+<script>
+	const word = document.querySelector<HTMLElement>('[data-wordmark]');
+	const box = word?.parentElement;
+
+	if (word && box) {
+		// підбираємо розмір шрифту так, щоб слово займало всю ширину
+		const fit = () => {
+			let size = 100;
+			// ширина літер росте не зовсім пропорційно розміру, тому уточнюємо кілька разів
+			for (let pass = 0; pass < 4; pass++) {
+				word.style.fontSize = size + 'px';
+				size *= (0.985 * box.clientWidth) / word.offsetWidth;
+			}
+			word.style.fontSize = size + 'px';
+		};
+
+		document.fonts.ready.then(fit);
+		new ResizeObserver(fit).observe(box);
+	}
+
+	const footer = document.querySelector<HTMLElement>('.footer');
+
+	if (footer) {
+		// Якщо футер вищий за екран, спершу він прокручується до кінця, а нерухомим стає,
+		// коли прилипає верхом: так видно його весь і накладання працює за будь-якої висоти.
+		const place = () => {
+			footer.style.setProperty('--curtain-bottom', Math.min(0, window.innerHeight - footer.offsetHeight) + 'px');
+			footer.classList.add('footer--curtain');
+		};
+		new ResizeObserver(place).observe(footer);
+		window.addEventListener('resize', place);
+	}
+</script>
+
+<style>
+	.footer { padding-block-start: var(--space-64); }
+
+
+	@media (prefers-reduced-motion: no-preference) {
+		:global(main) {
+			position: relative;
+			z-index: 1;
+			background: var(--color-bg-page);
+		}
+
+		.footer--curtain {
+			position: sticky;
+			bottom: var(--curtain-bottom, 0px);
+			z-index: 0;
+		}
+
+		/* з клавіатури посилання футера не мають ховатися під сторінкою */
+		.footer--curtain:has(:focus-visible) { position: relative; }
+	}
+
+	.footer__grid {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr);
+		gap: var(--space-32) var(--grid-gap);
+		padding-block-end: var(--space-32);
+	}
+
+	.footer__note {
+		grid-column: 1 / -1;
+		max-width: 32ch;
+	}
+
+	.footer__nav ul {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-8);
+		margin-block-start: var(--space-16);
+	}
+
+	/* літери трохи заходять за нижню лінію і обрізаються, як у макеті */
+	.footer__wordmark span {
+		display: inline-block;
+		vertical-align: top;
+		white-space: nowrap;
+		margin-block-end: -0.2em;
+	}
+
+	.footer__wordmark {
+		overflow: hidden;
+		padding-block-start: var(--space-8);
+		font-family: var(--font-family-display);
+		font-size: var(--font-size-wordmark);
+		font-weight: var(--font-weight-light);
+		line-height: var(--line-height-none);
+		letter-spacing: var(--letter-spacing-wordmark);
+	}
+
+	.footer__copy {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+		gap: var(--space-8) var(--space-24);
+		padding-block: var(--space-24);
+		border-top: var(--border-width) solid var(--color-border-default);
+		font-size: var(--font-size-13);
+		color: var(--color-text-secondary);
+	}
+
+	@media (min-width: 768px) {
+		.footer__grid {
+			grid-template-columns: repeat(12, minmax(0, 1fr));
+			padding-block-end: var(--space-64);
+		}
+
+		.footer__nav { grid-column: span 4; }
+	}
+
+	@media (min-width: 1024px) {
+		.footer__note { grid-column: 1 / span 4; }
+		.footer__nav { grid-column: span 2; }
+		.footer__nav:first-of-type { grid-column: 6 / span 2; }
+	}
+</style>

@@ -114,6 +114,23 @@ const tabs = ['Answers calls', 'Books appointments', 'Replies to texts', 'Follow
 		window.addEventListener('scroll', update, { passive: true });
 		window.addEventListener('resize', update);
 		update();
+
+		if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+			// коли макет з'являється на екрані, його рядки проявляються по черзі; пішов з екрана: спочатку
+			const observer = new IntersectionObserver((entries) =>
+				entries.forEach((entry) => {
+					if (entry.intersectionRatio >= 0.4) entry.target.classList.add('is-played');
+					else if (!entry.isIntersecting) entry.target.classList.remove('is-played');
+				}), { threshold: [0, 0.4] });
+
+			section.querySelectorAll<HTMLElement>('.panel__screen').forEach((screen) => {
+				screen.querySelectorAll<HTMLElement>('.line, .screen__foot, .row, .bubble, .queue').forEach((item, index) => {
+					item.classList.add('seq');
+					item.style.setProperty('--order', String(index));
+				});
+				observer.observe(screen);
+			});
+		}
 	}
 </script>
 
@@ -128,7 +145,7 @@ const tabs = ['Answers calls', 'Books appointments', 'Replies to texts', 'Follow
 	.features__panels {
 		display: flex;
 		flex-direction: column;
-		gap: var(--space-32);
+		gap: var(--tile-gap);
 		margin-block-start: var(--space-48);
 	}
 
@@ -174,6 +191,18 @@ const tabs = ['Answers calls', 'Books appointments', 'Replies to texts', 'Follow
 	}
 
 	.screen__time { align-self: center; }
+
+	.features :global(.seq) {
+		opacity: 0;
+		transform: translateY(var(--space-8));
+		transition: opacity var(--duration-base) var(--ease-out), transform var(--duration-base) var(--ease-out);
+	}
+
+	.features :global(.is-played .seq) {
+		opacity: 1;
+		transform: none;
+		transition-delay: calc(var(--order) * var(--duration-stagger));
+	}
 
 	@media (min-width: 1024px) {
 		.features__head {
