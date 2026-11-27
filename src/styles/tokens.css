@@ -83,8 +83,10 @@
   --font-size-14: 0.875rem;
   --font-size-15: 0.9375rem;
   --font-size-16: 1rem;
+  --font-size-17: 1.0625rem;
   --font-size-18: 1.125rem;
   --font-size-20: 1.25rem;
+  --font-size-21: 1.3125rem;
   --font-size-24: 1.5rem;
   --font-size-28: 1.75rem;
 
@@ -101,6 +103,7 @@
   --letter-spacing-h2: -0.02em;
   --letter-spacing-tight: -0.01em;
   --letter-spacing-caps: 0.06em;
+  --letter-spacing-wide: 0.12em;
 
   /* ---------- Відступи ---------- */
   --space-2: 0.125rem;
@@ -143,6 +146,9 @@
   --size-icon-20: 20px;
 
   --size-header: 72px;
+  --size-logo-cell-sm: 72px;
+  --size-logo-cell: 96px;
+  --size-logo-item: clamp(150px, 16vw, 214px);
   --size-row: 44px;
   --size-tile-row: 296px;
   --size-live-width: 420px;
@@ -175,6 +181,7 @@
   --duration-beat: 1s;
   --duration-breathe: 24s;
   --duration-flow: 32s;
+  --duration-marquee: 36s;
   --blur-flower: 6px;
 
   /* ---------- Сітка ---------- */

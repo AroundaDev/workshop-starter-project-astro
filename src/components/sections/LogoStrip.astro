@@ -1,0 +1,134 @@
+---
+/*
+ * Стрічка клієнтів. Телефон: сітка 2 колонки.
+ * З 768px: безкінечний рядок, зупиняється при наведенні (без анімації це сітка).
+ */
+const logos = [
+	{ name: 'Harbor Dental', style: 'serif' },
+	{ name: 'Juniper Spa', style: 'wide' },
+	{ name: 'Northside Plumbing', style: 'plain' },
+	{ name: 'Atelier Nine', style: 'mono' },
+	{ name: 'Bloom Physio', style: 'serif' },
+	{ name: 'Oakline Vets', style: 'wide' },
+];
+---
+
+<section class="logos" aria-label="Businesses using Nora">
+	<div class="container">
+		<div class="logos__caption">
+			<span class="text-label">Answering for</span>
+			<span class="text-small">Independent clinics, salons, studios and home-service teams</span>
+		</div>
+
+		<div class="logos__frame">
+			<div class="logos__track">
+				{[false, true].map((copy) => (
+					<ul class:list={['logos__list', { 'logos__list--copy': copy }]} aria-hidden={copy ? 'true' : undefined}>
+						{logos.map((logo) => <li class={`logo-${logo.style}`}>{logo.name}</li>)}
+					</ul>
+				))}
+			</div>
+		</div>
+	</div>
+</section>
+
+<style>
+	.logos__caption {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: var(--space-4);
+		margin-block-end: var(--space-16);
+	}
+
+	.logos__frame {
+		overflow: hidden;
+		border: var(--border-width) solid var(--color-border-default);
+		border-radius: var(--radius-8);
+	}
+
+	/* лінії сітки: це фон, видимий у щілинах між клітинками */
+	.logos__list {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: var(--border-width);
+		background: var(--color-border-default);
+	}
+
+	.logos__list--copy { display: none; }
+
+	li {
+		display: grid;
+		place-items: center;
+		height: var(--size-logo-cell-sm);
+		padding-inline: var(--space-12);
+		text-align: center;
+		font-size: var(--font-size-17);
+		letter-spacing: var(--letter-spacing-tight);
+		color: var(--color-text-secondary);
+		background: var(--color-bg-page);
+	}
+
+	.logo-serif {
+		font-family: var(--font-family-display);
+		font-size: var(--font-size-21);
+		font-style: italic;
+	}
+
+	.logo-mono,
+	.logo-wide {
+		font-size: var(--font-size-13);
+		text-transform: uppercase;
+	}
+
+	.logo-mono {
+		font-family: var(--font-family-mono);
+		letter-spacing: var(--letter-spacing-caps);
+	}
+
+	.logo-wide {
+		font-weight: var(--font-weight-medium);
+		letter-spacing: var(--letter-spacing-wide);
+	}
+
+	@media (min-width: 768px) {
+		.logos__caption {
+			flex-direction: row;
+			align-items: center;
+			justify-content: space-between;
+		}
+
+		.logos__list { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+		li { height: var(--size-logo-cell); }
+	}
+
+	@media (min-width: 768px) and (prefers-reduced-motion: no-preference) {
+		.logos__frame {
+			-webkit-mask-image: linear-gradient(90deg, transparent, var(--color-ink) 8%, var(--color-ink) 92%, transparent);
+			mask-image: linear-gradient(90deg, transparent, var(--color-ink) 8%, var(--color-ink) 92%, transparent);
+		}
+
+		.logos__track {
+			display: flex;
+			width: max-content;
+			animation: marquee var(--duration-marquee) linear infinite;
+		}
+
+		.logos__frame:hover .logos__track { animation-play-state: paused; }
+
+		.logos__list {
+			display: flex;
+			gap: 0;
+			background: none;
+		}
+
+		li {
+			width: var(--size-logo-item);
+			border-inline-end: var(--border-width) solid var(--color-border-default);
+		}
+	}
+
+	@keyframes marquee {
+		to { transform: translateX(-50%); }
+	}
+</style>
